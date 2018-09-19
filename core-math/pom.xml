@@ -8,7 +8,7 @@
 		<groupId>de.titus.game</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../</relativePath>
+		<relativePath>../parent</relativePath>
 	</parent>
 	<artifactId>core-math</artifactId>
 
@@ -19,9 +19,8 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.junit</groupId>
-			<artifactId>junit-bom</artifactId>
-			<type>pom</type>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
 		</dependency>
 	</dependencies>
 </project>
