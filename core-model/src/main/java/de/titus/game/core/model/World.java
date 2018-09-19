@@ -10,7 +10,7 @@ import java.util.Map;
 public final class World extends Base {
 
 	/** The chunks. */
-	private Map<String, Chunk>		chunks;
+	private static Map<String, Chunk>		chunks;
 
 	/** The entities. */
 	private Map<String, GameEntity>	entities;
@@ -25,7 +25,7 @@ public final class World extends Base {
 	 * @return the chunks
 	 */
 	public static Map<String, Chunk> getChunks() {
-		return this.chunks;
+		return chunks;
 	}
 
 	/**
