@@ -30,7 +30,9 @@ public class PhysicProcess extends AbstractProcess {
 	protected void runProcess(final long aCurrentTime, final long aLastRun, final long aDeltaTime) {
 		double elapsedTime = (double) aDeltaTime / 1000;
 		try {
-			EntityManager.WORLD.update(elapsedTime);
+			synchronized (EntityManager.WORLD) {
+				EntityManager.WORLD.update(elapsedTime);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("stop physic");

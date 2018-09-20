@@ -11,13 +11,13 @@ package de.titus.game.core.sim.test.threads;
 public abstract class AbstractProcess implements Runnable {
 
 	/** The thread. */
-	private final Thread thread;
+	private final Thread	thread;
 
 	/** The update rate. */
-	private final long updateRate;
+	private final long		updateRate;
 
 	/** The stop. */
-	private boolean stop;
+	private boolean			stop;
 
 	/**
 	 * Instantiates a new process.
@@ -61,9 +61,14 @@ public abstract class AbstractProcess implements Runnable {
 					this.runProcess(currentTime, lastRun, deta);
 				}
 				lastRun = currentTime;
-				long sleep = (this.updateRate - (System.currentTimeMillis() - currentTime));
+				long runtime = System.currentTimeMillis() - currentTime;
+
+				long sleep = (this.updateRate - runtime);
+				System.out.println(this.getClass().getSimpleName() + " runtime: " + runtime + "ms -> sleep: " + sleep + "ms");
 				if (sleep > 0)
 					Thread.sleep(sleep);
+				else
+					Thread.sleep(1);
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
@@ -75,8 +80,8 @@ public abstract class AbstractProcess implements Runnable {
 	 * Run process.
 	 *
 	 * @param aCurrentTime the a current time
-	 * @param aLastRun     the a last run
-	 * @param aDeltaTime   the a delta time
+	 * @param aLastRun the a last run
+	 * @param aDeltaTime the a delta time
 	 */
 	protected abstract void runProcess(long aCurrentTime, final long aLastRun, long aDeltaTime);
 

@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dyn4j.dynamics.Body;
@@ -24,16 +25,16 @@ import de.titus.game.core.sim.test.GameObject;
 public class RenderProcess extends AbstractProcess {
 
 	/** The canvas. */
-	private final Canvas canvas;
+	private final Canvas	canvas;
 
 	/** The scale. */
-	private final double scale;
+	private final double	scale;
 
 	/**
 	 * Instantiates a new renderer.
 	 *
 	 * @param aCanvas the a canvas
-	 * @param aScale  the a scale
+	 * @param aScale the a scale
 	 */
 	public RenderProcess(final Canvas aCanvas, final double aScale) {
 		super(1000 / 60);
@@ -45,7 +46,7 @@ public class RenderProcess extends AbstractProcess {
 	 * Run process.
 	 *
 	 * @param aCurrentTime the a current time
-	 * @param aLastRun     the a last run
+	 * @param aLastRun the a last run
 	 * @see de.titus.game.core.sim.test.threads.AbstractProcess#runProcess(long,
 	 *      long)
 	 */
@@ -88,20 +89,25 @@ public class RenderProcess extends AbstractProcess {
 	 */
 	protected void renderEntities(final Graphics2D g) {
 		// lets draw over everything with a white background
+		g.clearRect(-400, -300, 800, 600);
 		g.setColor(Color.WHITE);
 		g.fillRect(-400, -300, 800, 600);
 
 		// lets move the view up some
 		g.translate(0.0, -1.0 * this.scale);
 
-		List<Body> bodies = EntityManager.WORLD.getBodies();
+		List<Body> bodies = new ArrayList<>(EntityManager.WORLD.getBodies());
 		// draw all the objects in the world
-		for (Body body : bodies) {
-			// get the object
-			GameObject go = (GameObject) body;
-			// draw the object
-			go.render(g);
-		}
+		if (bodies != null)
+			for (Body body : bodies) {
+				// get the object
+				if (body != null) {
+					GameObject go = (GameObject) body;
+					// draw the object
+					go.render(g);
+				}
+			}
+		System.out.println("renderer game object count: " + bodies.size());
 	}
 
 }

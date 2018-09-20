@@ -2,6 +2,7 @@ package de.titus.game.core.sim.test;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 
 import org.dyn4j.dynamics.Body;
@@ -10,7 +11,9 @@ import org.dyn4j.geometry.Convex;
 
 public class GameObject extends Body {
 	/** The color of the object */
-	protected Color color;
+	protected Color	color;
+
+	private Shape	shape;
 
 	/**
 	 * Default constructor.
@@ -43,7 +46,10 @@ public class GameObject extends Body {
 		for (BodyFixture fixture : this.fixtures) {
 			// get the shape on the fixture
 			Convex convex = fixture.getShape();
-			Graphics2DRenderer.render(g, convex, UsingGraphics2D.SCALE, this.color);
+			if (this.shape == null)
+				this.shape = Graphics2DRenderer.render(g, convex, UsingGraphics2D.SCALE, this.color);
+			else
+				g.draw(this.shape);
 		}
 
 		// set the original transform

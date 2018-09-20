@@ -11,7 +11,7 @@ public class WorldBound extends AbstractBounds {
 	private final Circle bounds;
 
 	public WorldBound() {
-		this.bounds = new Circle(5);
+		this.bounds = new Circle(100);
 	}
 
 	@Override
@@ -27,13 +27,9 @@ public class WorldBound extends AbstractBounds {
 		boolean isOutside = boundsCenter.distanceSquared(collidableCenter) > (totalRadius * totalRadius);
 
 		if (isOutside) {
-			System.out.println("colider is outside: " + collidable);
 			if (collidable instanceof Body) {
 				Body body = (Body) collidable;
-
-				body.applyForce(body.getForce().getNegative().multiply(10));
-				System.out.println("apply force");
-
+				EntityManager.WORLD.removeBody(body, true);
 			} else
 				System.out.println("no body");
 		}
