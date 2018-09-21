@@ -42,6 +42,8 @@ public class Space<D> {
 	/** The final space. */
 	public final boolean finalSpace;
 
+	public final long deph;
+
 	/**
 	 * Instantiates a new space.
 	 *
@@ -51,11 +53,12 @@ public class Space<D> {
 	 * @param aQuadrant the a quadrant
 	 */
 	@SuppressWarnings("unchecked")
-	public Space(final Vector aCenter, final Number aSize, final Space<D> aParent, final GridQuadrant aQuadrant) {
+	public Space(final Vector aCenter, final Number aSize, final Space<D> aParent, final GridQuadrant aQuadrant, final long aDeph) {
 		this.id = aQuadrant;
 		this.parent = aParent;
 		this.center = aCenter;
 		this.size = aSize;
+		this.deph = aDeph;
 
 		if (this.size.nativ <= Space.MIN_QUADRANT_SIZE.nativ) {
 			this.finalSpace = true;
@@ -66,8 +69,7 @@ public class Space<D> {
 			this.quadrants = new Space[4];
 			this.data = null;
 		}
-
-		System.out.println("create space: " + this);
+		System.out.println(this);
 	}
 
 	/**
@@ -79,8 +81,8 @@ public class Space<D> {
 	 * @param aQuadrant   the a quadrant
 	 * @param aFullCreate the a full create
 	 */
-	public Space(final Vector aCenter, final Number aSize, final Space<D> aParent, final GridQuadrant aQuadrant, final boolean aFullCreate) {
-		this(aCenter, aSize, aParent, aQuadrant);
+	public Space(final Vector aCenter, final Number aSize, final Space<D> aParent, final GridQuadrant aQuadrant, final long aDeph, final boolean aFullCreate) {
+		this(aCenter, aSize, aParent, aQuadrant, aDeph);
 		if (aFullCreate && !this.finalSpace) {
 			this.quadrants[GridQuadrant.I.ordinal()] = Space.newInstance(this, GridQuadrant.I, this.finalSpace);
 			this.quadrants[GridQuadrant.II.ordinal()] = Space.newInstance(this, GridQuadrant.II, aFullCreate);
@@ -213,7 +215,7 @@ public class Space<D> {
 	public static final <D> Space<D> newInstance(final Space<D> aParent, final GridQuadrant aQuadrant, final boolean aFullCreate) {
 		Number size = aParent.size.div(Number.toNumber(2, 0), true);
 		Vector center = aParent.center.addVector(aQuadrant.vector.multiply(size));
-		return new Space<D>(center, size, aParent, aQuadrant, aFullCreate);
+		return new Space<D>(center, size, aParent, aQuadrant, aParent.deph + 1, aFullCreate);
 	}
 
 	/**
@@ -234,7 +236,7 @@ public class Space<D> {
 	 * @return the space
 	 */
 	public static final <D> Space<D> newGlobalSpace(final boolean aFullCreate) {
-		return new Space<D>(Vector.ZERO, Number.toNumberUncecked(Number.POSITIV_INFINITY.nativ * 2), null, null, aFullCreate);
+		return new Space<D>(Vector.ZERO, Number.toNumberUncecked(Number.POSITIV_INFINITY.nativ * 2), null, null, 0, aFullCreate);
 	}
 
 	/**
@@ -244,6 +246,6 @@ public class Space<D> {
 	 */
 	@Override
 	public String toString() {
-		return "Space [id=" + this.id + ", center=" + this.center + ", size=" + this.size + ", finalSpace=" + this.finalSpace + "]";
+		return "Space [" + "deph=" + this.deph + ", id=" + this.id + ", center=" + this.center + ", size=" + this.size + ", finalSpace=" + this.finalSpace + "]";
 	}
 }
