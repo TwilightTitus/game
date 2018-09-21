@@ -82,10 +82,10 @@ public class Space<D> {
 	public Space(final Vector aCenter, final Number aSize, final Space<D> aParent, final GridQuadrant aQuadrant, final boolean aFullCreate) {
 		this(aCenter, aSize, aParent, aQuadrant);
 		if (aFullCreate && !this.finalSpace) {
-			this.quadrants[GridQuadrant.I.ordinal()] = Space.newInstance(this, GridQuadrant.I);
-			this.quadrants[GridQuadrant.II.ordinal()] = Space.newInstance(this, GridQuadrant.II);
-			this.quadrants[GridQuadrant.III.ordinal()] = Space.newInstance(this, GridQuadrant.III);
-			this.quadrants[GridQuadrant.IV.ordinal()] = Space.newInstance(this, GridQuadrant.IV);
+			this.quadrants[GridQuadrant.I.ordinal()] = Space.newInstance(this, GridQuadrant.I, this.finalSpace);
+			this.quadrants[GridQuadrant.II.ordinal()] = Space.newInstance(this, GridQuadrant.II, aFullCreate);
+			this.quadrants[GridQuadrant.III.ordinal()] = Space.newInstance(this, GridQuadrant.III, aFullCreate);
+			this.quadrants[GridQuadrant.IV.ordinal()] = Space.newInstance(this, GridQuadrant.IV, aFullCreate);
 		}
 	}
 
