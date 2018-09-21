@@ -19,7 +19,16 @@ class SpaceTest {
 	/** The Constant RANDOM. */
 	public static final Random RANDOM = new Random();
 	/** The Constant GLOBALSPACE. */
-	public static final Space<Object> GLOBALSPACE = Space.newGlobalSpace(true);
+	public static final Space<Object> GLOBALSPACE = Space.newGlobalSpace();
+
+	/**
+	 * Test create full space.
+	 */
+	@Test
+	void testCreateFullSpace() {
+		Space<Object> aSpace = Space.newGlobalSpace(true);
+		Assertions.assertNotNull(aSpace);
+	}
 
 	/**
 	 * Test add data.
