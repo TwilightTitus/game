@@ -3,8 +3,8 @@
  */
 package de.titus.game.core.math.specials.numbers;
 
-import de.titus.game.core.math.MathContext;
-import de.titus.game.core.math.Number;
+import de.titus.game.core.math.fixpoint.MathContext;
+import de.titus.game.core.math.fixpoint.Number;
 
 /**
  * The Class PositivInfinity.
@@ -28,7 +28,7 @@ public class NegativInfinity extends Number {
 	 *
 	 * @param aNumber the a number
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#sum(de.titus.game.core.math.Number)
+	 * @see de.titus.game.core.math.fixpoint.Number#sum(de.titus.game.core.math.fixpoint.Number)
 	 */
 	@Override
 	public Number sum(final Number aNumber) {
@@ -40,7 +40,7 @@ public class NegativInfinity extends Number {
 	 *
 	 * @param aNumber the a number
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#sub(de.titus.game.core.math.Number)
+	 * @see de.titus.game.core.math.fixpoint.Number#sub(de.titus.game.core.math.fixpoint.Number)
 	 */
 	@Override
 	public Number sub(final Number aNumber) {
@@ -52,7 +52,7 @@ public class NegativInfinity extends Number {
 	 *
 	 * @param aNumber the a number
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#multi(de.titus.game.core.math.Number)
+	 * @see de.titus.game.core.math.fixpoint.Number#multi(de.titus.game.core.math.fixpoint.Number)
 	 */
 	@Override
 	public Number multi(final Number aNumber) {
@@ -64,7 +64,7 @@ public class NegativInfinity extends Number {
 	 *
 	 * @param aNumber the a number
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#div(de.titus.game.core.math.Number)
+	 * @see de.titus.game.core.math.fixpoint.Number#div(de.titus.game.core.math.fixpoint.Number)
 	 */
 	@Override
 	public Number div(final Number aNumber) {
@@ -75,7 +75,7 @@ public class NegativInfinity extends Number {
 	 * Pow.
 	 *
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#pow()
+	 * @see de.titus.game.core.math.fixpoint.Number#pow()
 	 */
 	@Override
 	public Number pow() {
@@ -86,7 +86,7 @@ public class NegativInfinity extends Number {
 	 * Sqrt.
 	 *
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#sqrt()
+	 * @see de.titus.game.core.math.fixpoint.Number#sqrt()
 	 */
 	@Override
 	public Number sqrt() {
@@ -97,7 +97,7 @@ public class NegativInfinity extends Number {
 	 * Negate.
 	 *
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#negate()
+	 * @see de.titus.game.core.math.fixpoint.Number#negate()
 	 */
 	@Override
 	public Number negate() {
@@ -109,7 +109,7 @@ public class NegativInfinity extends Number {
 	 *
 	 * @return the number
 	 * @throws CloneNotSupportedException the clone not supported exception
-	 * @see de.titus.game.core.math.Number#clone()
+	 * @see de.titus.game.core.math.fixpoint.Number#clone()
 	 */
 	@Override
 	protected Number clone() throws CloneNotSupportedException {

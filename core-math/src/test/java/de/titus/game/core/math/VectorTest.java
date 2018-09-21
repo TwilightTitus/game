@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import de.titus.game.core.math.fixpoint.Number;
+import de.titus.game.core.math.fixpoint.Vector;
+
 /**
  * The Class VectorTest.
  */

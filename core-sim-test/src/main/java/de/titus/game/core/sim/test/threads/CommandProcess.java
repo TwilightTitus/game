@@ -27,6 +27,7 @@ public class CommandProcess extends AbstractProcess {
 			Vector2 f = new Vector2(this.random.nextBoolean() ? -1 : 1 * this.random.nextDouble() * 100, this.random.nextBoolean() ? -1 : 1 * this.random.nextDouble() * 100);
 			Body body = EntityManager.WORLD.getBody(index);
 			body.applyForce(f);
+
 		}
 
 		if (EntityManager.WORLD.getBodyCount() < CommandProcess.itemCount) {

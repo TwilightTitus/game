@@ -3,8 +3,8 @@
  */
 package de.titus.game.core.math.specials.vectors;
 
-import de.titus.game.core.math.Number;
-import de.titus.game.core.math.Vector;
+import de.titus.game.core.math.fixpoint.Number;
+import de.titus.game.core.math.fixpoint.Vector;
 
 /**
  * The Class NormalizedVector.
@@ -27,7 +27,7 @@ public class ZeroVector extends Vector {
 	 * Normalize.
 	 *
 	 * @return the vector
-	 * @see de.titus.game.core.math.Vector#normalize()
+	 * @see de.titus.game.core.math.fixpoint.Vector#normalize()
 	 */
 	@Override
 	public Vector normalize() {
@@ -39,7 +39,7 @@ public class ZeroVector extends Vector {
 	 *
 	 * @param aVector the a vector
 	 * @return the vector
-	 * @see de.titus.game.core.math.Vector#addVector(de.titus.game.core.math.Vector)
+	 * @see de.titus.game.core.math.fixpoint.Vector#addVector(de.titus.game.core.math.fixpoint.Vector)
 	 */
 	@Override
 	public Vector addVector(final Vector aVector) {
@@ -51,7 +51,7 @@ public class ZeroVector extends Vector {
 	 *
 	 * @param aNumber the a number
 	 * @return the vector
-	 * @see de.titus.game.core.math.Vector#multiply(de.titus.game.core.math.Number)
+	 * @see de.titus.game.core.math.fixpoint.Vector#multiply(de.titus.game.core.math.fixpoint.Number)
 	 */
 	@Override
 	public Vector multiply(final Number aNumber) {

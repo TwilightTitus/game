@@ -8,6 +8,8 @@ import java.lang.reflect.Modifier;
 
 import org.junit.jupiter.api.Test;
 
+import de.titus.game.core.math.fixpoint.Number;
+
 /**
  * The Class NumberTest.
  *

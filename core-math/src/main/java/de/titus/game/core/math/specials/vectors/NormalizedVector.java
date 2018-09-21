@@ -3,8 +3,8 @@
  */
 package de.titus.game.core.math.specials.vectors;
 
-import de.titus.game.core.math.Number;
-import de.titus.game.core.math.Vector;
+import de.titus.game.core.math.fixpoint.Number;
+import de.titus.game.core.math.fixpoint.Vector;
 
 /**
  * The Class NormalizedVector.
@@ -27,7 +27,7 @@ public class NormalizedVector extends Vector {
 	 * Normalize.
 	 *
 	 * @return the vector
-	 * @see de.titus.game.core.math.Vector#normalize()
+	 * @see de.titus.game.core.math.fixpoint.Vector#normalize()
 	 */
 	@Override
 	public Vector normalize() {

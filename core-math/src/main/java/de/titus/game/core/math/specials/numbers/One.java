@@ -3,7 +3,7 @@
  */
 package de.titus.game.core.math.specials.numbers;
 
-import de.titus.game.core.math.Number;
+import de.titus.game.core.math.fixpoint.Number;
 
 /**
  * The Class Zero.
@@ -27,7 +27,7 @@ public final class One extends Number {
 	 *
 	 * @param aNumber the a number
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#multi(de.titus.game.core.math.Number)
+	 * @see de.titus.game.core.math.fixpoint.Number#multi(de.titus.game.core.math.fixpoint.Number)
 	 */
 	@Override
 	public Number multi(final Number aNumber) {
@@ -38,7 +38,7 @@ public final class One extends Number {
 	 * Pow.
 	 *
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#pow()
+	 * @see de.titus.game.core.math.fixpoint.Number#pow()
 	 */
 	@Override
 	public Number pow() {
@@ -49,7 +49,7 @@ public final class One extends Number {
 	 * Sqrt.
 	 *
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#sqrt()
+	 * @see de.titus.game.core.math.fixpoint.Number#sqrt()
 	 */
 	@Override
 	public Number sqrt() {

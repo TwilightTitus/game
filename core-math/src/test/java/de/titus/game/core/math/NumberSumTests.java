@@ -6,6 +6,9 @@ package de.titus.game.core.math;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import de.titus.game.core.math.fixpoint.MathContext;
+import de.titus.game.core.math.fixpoint.Number;
+
 /**
  * The Class NumberTest.
  *

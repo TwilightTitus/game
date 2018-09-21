@@ -1,4 +1,4 @@
-package de.titus.game.core.math;
+package de.titus.game.core.math.doublepoint;
 
 /**
  * The Enum GridQuadrant.
@@ -6,19 +6,21 @@ package de.titus.game.core.math;
 public enum GridQuadrant {
 
 	/** The i. */
-	I(new Vector(Number.ONE, Number.ONE)),
+	I(new Vector(1, 1)),
 	/** The ii. */
-	II(new Vector(Number.NEGATIV_ONE, Number.ONE)),
+	II(new Vector(-1, 1)),
 	/** The iii. */
-	III(new Vector(Number.NEGATIV_ONE, Number.NEGATIV_ONE)),
+	III(new Vector(-1, -1)),
 	/** The iv. */
-	IV(new Vector(Number.ONE, Number.NEGATIV_ONE));
+	IV(new Vector(1, -1));
 
+	/** The vector. */
 	public final Vector vector;
 
 	/**
 	 * Instantiates a new grid quadrant.
 	 *
+	 * @param aVector the a vector
 	 */
 	private GridQuadrant(final Vector aVector) {
 		this.vector = aVector;
@@ -27,16 +29,16 @@ public enum GridQuadrant {
 	/**
 	 * Gets the quadrant.
 	 *
-	 * @param aPoint          the a point
+	 * @param aPoint the a point
 	 * @param aQuadrantCenter the a quadrant center
 	 * @return the quadrant
 	 */
 	public static GridQuadrant getQuadrant(final Vector aPoint, final Vector aQuadrantCenter) {
-		if (aQuadrantCenter.x.nativ <= aPoint.x.nativ && aQuadrantCenter.y.nativ <= aPoint.y.nativ)
+		if (aQuadrantCenter.x <= aPoint.x && aQuadrantCenter.y <= aPoint.y)
 			return GridQuadrant.I;
-		else if (aQuadrantCenter.x.nativ > aPoint.x.nativ && aQuadrantCenter.y.nativ <= aPoint.y.nativ)
+		else if (aQuadrantCenter.x > aPoint.x && aQuadrantCenter.y <= aPoint.y)
 			return GridQuadrant.II;
-		else if (aQuadrantCenter.x.nativ > aPoint.x.nativ && aQuadrantCenter.y.nativ > aPoint.y.nativ)
+		else if (aQuadrantCenter.x > aPoint.x && aQuadrantCenter.y > aPoint.y)
 			return GridQuadrant.III;
 		else
 			return GridQuadrant.IV;

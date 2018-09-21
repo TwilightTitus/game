@@ -1,4 +1,4 @@
-package de.titus.game.core.math;
+package de.titus.game.core.math.fixpoint;
 
 import de.titus.game.core.math.specials.numbers.MaxValue;
 import de.titus.game.core.math.specials.numbers.MinValue;

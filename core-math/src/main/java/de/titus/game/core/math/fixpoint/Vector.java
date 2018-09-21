@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.titus.game.core.math;
+package de.titus.game.core.math.fixpoint;
 
 import de.titus.game.core.math.specials.vectors.NormalizedVector;
 import de.titus.game.core.math.specials.vectors.ZeroVector;

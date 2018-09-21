@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.titus.game.core.math;
+package de.titus.game.core.math.fixpoint;
 
 /**
  * The Class Math.

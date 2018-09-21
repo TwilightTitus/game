@@ -1,6 +1,6 @@
 package de.titus.game.core.world.database;
 
-import de.titus.game.core.math.Vector;
+import de.titus.game.core.math.doublepoint.Vector;
 
 /**
  * The Class Shape.
@@ -8,10 +8,10 @@ import de.titus.game.core.math.Vector;
 public class Shape {
 
 	/** The points. */
-	public final Vector[] points;
+	public final Vector[]	points;
 
 	/** The data. */
-	public final Object data;
+	public final Object		data;
 
 	/**
 	 * Instantiates a new shape.
@@ -27,7 +27,7 @@ public class Shape {
 	/**
 	 * Instantiates a new shape.
 	 *
-	 * @param aData  the a data
+	 * @param aData the a data
 	 * @param points the points
 	 */
 	public Shape(final Object aData, final Vector... points) {

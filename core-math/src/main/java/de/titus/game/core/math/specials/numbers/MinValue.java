@@ -3,8 +3,8 @@
  */
 package de.titus.game.core.math.specials.numbers;
 
-import de.titus.game.core.math.MathContext;
-import de.titus.game.core.math.Number;
+import de.titus.game.core.math.fixpoint.MathContext;
+import de.titus.game.core.math.fixpoint.Number;
 
 /**
  * The Class MaxValue.
@@ -38,7 +38,7 @@ public final class MinValue extends Number {
 	 *
 	 * @param aNumber the a number
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#sub(de.titus.game.core.math.Number)
+	 * @see de.titus.game.core.math.fixpoint.Number#sub(de.titus.game.core.math.fixpoint.Number)
 	 */
 	@Override
 	public Number sub(final Number aNumber) {
@@ -54,7 +54,7 @@ public final class MinValue extends Number {
 	 * Pow.
 	 *
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#pow()
+	 * @see de.titus.game.core.math.fixpoint.Number#pow()
 	 */
 	@Override
 	public Number pow() {
@@ -65,7 +65,7 @@ public final class MinValue extends Number {
 	 * Sqrt.
 	 *
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#sqrt()
+	 * @see de.titus.game.core.math.fixpoint.Number#sqrt()
 	 */
 	@Override
 	public Number sqrt() {
@@ -76,7 +76,7 @@ public final class MinValue extends Number {
 	 * Negate.
 	 *
 	 * @return the number
-	 * @see de.titus.game.core.math.Number#negate()
+	 * @see de.titus.game.core.math.fixpoint.Number#negate()
 	 */
 	@Override
 	public Number negate() {

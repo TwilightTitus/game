@@ -3,13 +3,12 @@ package de.titus.game.core.world.database;
 import java.util.Random;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import de.titus.game.core.math.GridQuadrant;
-import de.titus.game.core.math.Number;
-import de.titus.game.core.math.Vector;
+import de.titus.game.core.math.doublepoint.GridQuadrant;
+import de.titus.game.core.math.doublepoint.MathContext;
+import de.titus.game.core.math.doublepoint.Vector;
 
 /**
  * The Class SpaceTest.
@@ -17,16 +16,21 @@ import de.titus.game.core.math.Vector;
 class SpaceTest {
 
 	/** The Constant RANDOM. */
-	public static final Random RANDOM = new Random();
+	public static final Random			RANDOM		= new Random();
 	/** The Constant GLOBALSPACE. */
-	public static final Space<Object> GLOBALSPACE = Space.newGlobalSpace();
+	public static final Space<Object>	GLOBALSPACE	= Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2);
 
 	/**
 	 * Test create full space.
 	 */
 	@Test
 	void testCreateFullSpace() {
-		Space<Object> aSpace = Space.newGlobalSpace(true);
+		Runtime runtime = Runtime.getRuntime();
+		long currentMemory = runtime.totalMemory() - runtime.freeMemory();
+		Space<Object> aSpace = Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2, true);
+		long memoryUsage = runtime.totalMemory() - runtime.freeMemory() - currentMemory;
+		System.out.println("memory usage for full Space: " + ((double) memoryUsage / (8 * 1024 * 1024)));
+
 		Assertions.assertNotNull(aSpace);
 	}
 
@@ -39,22 +43,22 @@ class SpaceTest {
 		Vector point;
 
 		data = new Object();
-		point = new Vector(Number.ONE, Number.ONE);
+		point = new Vector(1, 1);
 		SpaceTest.GLOBALSPACE.addData(data, point);
 		Assertions.assertTrue(SpaceTest.GLOBALSPACE.getSpace(point).getData().contains(data));
 
 		data = new Object();
-		point = new Vector(Number.ONE, Number.ZERO);
+		point = new Vector(1, 0);
 		SpaceTest.GLOBALSPACE.addData(data, point);
 		Assertions.assertTrue(SpaceTest.GLOBALSPACE.getSpace(point).getData().contains(data));
 
 		data = new Object();
-		point = new Vector(Number.ZERO, Number.ONE);
+		point = new Vector(0, 1);
 		SpaceTest.GLOBALSPACE.addData(data, point);
 		Assertions.assertTrue(SpaceTest.GLOBALSPACE.getSpace(point).getData().contains(data));
 
 		data = new Object();
-		point = new Vector(Number.ZERO, Number.ZERO);
+		point = new Vector(0, 0);
 		SpaceTest.GLOBALSPACE.addData(data, point);
 		Assertions.assertTrue(SpaceTest.GLOBALSPACE.getSpace(point).getData().contains(data));
 	}
@@ -68,19 +72,19 @@ class SpaceTest {
 		Vector point;
 
 		data = new Object();
-		point = new Vector(Number.POSITIV_INFINITY, Number.POSITIV_INFINITY);
+		point = new Vector(Integer.MAX_VALUE + 1, Integer.MAX_VALUE + 1);
 		Assertions.assertNull(SpaceTest.GLOBALSPACE.addData(data, point));
 
 		data = new Object();
-		point = new Vector(Number.NEGATIV_INFINITY, Number.POSITIV_INFINITY);
+		point = new Vector(-1 * (Integer.MAX_VALUE + 1), Integer.MAX_VALUE + 1);
 		Assertions.assertNull(SpaceTest.GLOBALSPACE.addData(data, point));
 
 		data = new Object();
-		point = new Vector(Number.NEGATIV_INFINITY, Number.NEGATIV_INFINITY);
+		point = new Vector(-1 * (Integer.MAX_VALUE + 1), -1 * (Integer.MAX_VALUE + 1));
 		Assertions.assertNull(SpaceTest.GLOBALSPACE.addData(data, point));
 
 		data = new Object();
-		point = new Vector(Number.POSITIV_INFINITY, Number.NEGATIV_INFINITY);
+		point = new Vector(Integer.MAX_VALUE + 1, -1 * (Integer.MAX_VALUE + 1));
 		Assertions.assertNull(SpaceTest.GLOBALSPACE.addData(data, point));
 
 	}
@@ -88,22 +92,76 @@ class SpaceTest {
 	/**
 	 * Test add data performace.
 	 */
-	@Disabled
 	@RepeatedTest(10)
 	void testAddDataPerformace() {
-		SpaceTest.GLOBALSPACE.clearData();
+		Space<Object> global = Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2, true);
 		Object data;
 		Vector point;
+		long addRuntime = 0;
+		long addCount = 0;
+		long getRuntime = 0;
+		long getCount = 0;
+
 		for (int i = 0; i < 100000; i++) {
 			data = new Object();
-
-			Number x = Number.toNumber((SpaceTest.RANDOM.nextBoolean() ? 1 : -1) * (long) (SpaceTest.RANDOM.nextDouble() * Number.POSITIV_INFINITY.nativ));
-			Number y = Number.toNumber((SpaceTest.RANDOM.nextBoolean() ? 1 : -1) * (long) (SpaceTest.RANDOM.nextDouble() * Number.POSITIV_INFINITY.nativ));
+			double x = (SpaceTest.RANDOM.nextBoolean() ? 1 : -1) * (long) (SpaceTest.RANDOM.nextDouble() * MathContext.POSITIV_INFINITY);
+			double y = (SpaceTest.RANDOM.nextBoolean() ? 1 : -1) * (long) (SpaceTest.RANDOM.nextDouble() * MathContext.POSITIV_INFINITY);
 
 			point = new Vector(x, y);
-			SpaceTest.GLOBALSPACE.addData(data, point);
-			Assertions.assertTrue(SpaceTest.GLOBALSPACE.getSpace(point).getData().contains(data));
+			long startAdd = System.currentTimeMillis();
+			Space<Object> space = global.addData(data, point);
+			addRuntime = addRuntime + (System.currentTimeMillis() - startAdd);
+			addCount++;
+
+			if (space != null) {
+				long startGet = System.currentTimeMillis();
+				Assertions.assertTrue(global.getSpace(point).getData().contains(data));
+				getRuntime = getRuntime + (System.currentTimeMillis() - startGet);
+				getCount++;
+			} else
+				System.out.println("Out of space!");
 		}
+
+		System.out.println("add: " + addRuntime + "ms / " + addCount);
+		System.out.println("avg add: " + ((double) addRuntime / addCount) + "ms");
+		System.out.println("get: " + getRuntime + "ms / " + getCount);
+		System.out.println("avg get: " + ((double) getRuntime / getCount) + "ms");
+	}
+
+	@Test
+	void testAddDataPerformaceFullFill() {
+		Space<Object> global = Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2, true);
+		Object data;
+		Vector point;
+		long addRuntime = 0;
+		long addCount = 0;
+		long getRuntime = 0;
+		long getCount = 0;
+
+		for (int i = 0; i < 1000000; i++) {
+			data = new Object();
+			double x = (SpaceTest.RANDOM.nextBoolean() ? 1 : -1) * (long) (SpaceTest.RANDOM.nextDouble() * MathContext.POSITIV_INFINITY);
+			double y = (SpaceTest.RANDOM.nextBoolean() ? 1 : -1) * (long) (SpaceTest.RANDOM.nextDouble() * MathContext.POSITIV_INFINITY);
+
+			point = new Vector(x, y);
+			long startAdd = System.currentTimeMillis();
+			Space<Object> space = global.addData(data, point);
+			addRuntime = addRuntime + (System.currentTimeMillis() - startAdd);
+			addCount++;
+
+			if (space != null) {
+				long startGet = System.currentTimeMillis();
+				Assertions.assertTrue(global.getSpace(point).getData().contains(data));
+				getRuntime = getRuntime + (System.currentTimeMillis() - startGet);
+				getCount++;
+			} else
+				System.out.println("Out of space!");
+		}
+
+		System.out.println("add: " + addRuntime + "ms / " + addCount);
+		System.out.println("avg add: " + ((double) addRuntime / addCount) + "ms");
+		System.out.println("get: " + getRuntime + "ms / " + getCount);
+		System.out.println("avg get: " + ((double) getRuntime / getCount) + "ms");
 	}
 
 	/**
@@ -111,7 +169,7 @@ class SpaceTest {
 	 */
 	@Test
 	void testNewInstance() {
-		Space.newInstance(Space.newGlobalSpace(), GridQuadrant.I);
+		Space.newInstance(Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2), GridQuadrant.I);
 	}
 
 }

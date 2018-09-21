@@ -3,10 +3,9 @@ package de.titus.game.core.world.database;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.titus.game.core.math.GridQuadrant;
-import de.titus.game.core.math.Number;
-import de.titus.game.core.math.NumberUtils;
-import de.titus.game.core.math.Vector;
+import de.titus.game.core.math.doublepoint.GridQuadrant;
+import de.titus.game.core.math.doublepoint.MathContext;
+import de.titus.game.core.math.doublepoint.Vector;
 
 /**
  * The Class Space.
@@ -16,72 +15,80 @@ import de.titus.game.core.math.Vector;
 public class Space<D> {
 
 	/** The Constant QUADRANT_DEPH. */
-	public final static Number QUADRANT_DEPH = Number.toNumber(1000, 0);
+	public final static long	QUADRANT_DEPH		= 15;
 
-	/** The Constant maxSize. */
-	public final static Number MIN_QUADRANT_SIZE = Number.toNumberUncecked(Number.POSITIV_INFINITY.nativ / Space.QUADRANT_DEPH.nativ);
+	public final static double	QUADRANT_MAX_SIZE	= 100;
+
+	private static boolean		MAX_DEPH_REACHED	= false;
 
 	/** The id. */
-	public final GridQuadrant id;
+	public final GridQuadrant	id;
 
 	/** The quadrants. */
-	public final Space<D>[] quadrants;
+	public final Space<D>[]		quadrants;
 
 	/** The shapes. */
-	private final Set<D> data;
+	private final Set<D>		data;
 
 	/** The center. */
-	public final Vector center;
+	public final Vector			center;
 
 	/** The size. */
-	public final Number size;
+	public final double			size;
 
 	/** The parent. */
-	public final Space<D> parent;
+	public final Space<D>		parent;
 
 	/** The final space. */
-	public final boolean finalSpace;
+	public final boolean		finalSpace;
 
-	public final long deph;
+	/** The deph. */
+	public final long			deph;
 
 	/**
 	 * Instantiates a new space.
 	 *
-	 * @param aCenter   the a center
-	 * @param aSize     the a size
-	 * @param aParent   the a parent
+	 * @param aCenter the a center
+	 * @param aSize the a size
+	 * @param aParent the a parent
 	 * @param aQuadrant the a quadrant
+	 * @param aDeph the a deph
 	 */
 	@SuppressWarnings("unchecked")
-	public Space(final Vector aCenter, final Number aSize, final Space<D> aParent, final GridQuadrant aQuadrant, final long aDeph) {
+	public Space(final Vector aCenter, final double aSize, final Space<D> aParent, final GridQuadrant aQuadrant, final long aDeph) {
 		this.id = aQuadrant;
 		this.parent = aParent;
 		this.center = aCenter;
 		this.size = aSize;
 		this.deph = aDeph;
 
-		if (this.size.nativ <= Space.MIN_QUADRANT_SIZE.nativ) {
-			this.finalSpace = true;
-			this.quadrants = null;
-			this.data = new HashSet<>();
-		} else {
+		// if (this.deph < Space.QUADRANT_DEPH) {
+		if (this.size > Space.QUADRANT_MAX_SIZE) {
 			this.finalSpace = false;
 			this.quadrants = new Space[4];
 			this.data = null;
+		} else {
+			this.finalSpace = true;
+			this.quadrants = null;
+			this.data = new HashSet<>();
+			if (!Space.MAX_DEPH_REACHED) {
+				System.out.println("min-size: " + this.size + ", deph: " + this.deph);
+				Space.MAX_DEPH_REACHED = true;
+			}
 		}
-		System.out.println(this);
 	}
 
 	/**
 	 * Instantiates a new space.
 	 *
-	 * @param aCenter     the a center
-	 * @param aSize       the a size
-	 * @param aParent     the a parent
-	 * @param aQuadrant   the a quadrant
+	 * @param aCenter the a center
+	 * @param aSize the a size
+	 * @param aParent the a parent
+	 * @param aQuadrant the a quadrant
+	 * @param aDeph the a deph
 	 * @param aFullCreate the a full create
 	 */
-	public Space(final Vector aCenter, final Number aSize, final Space<D> aParent, final GridQuadrant aQuadrant, final long aDeph, final boolean aFullCreate) {
+	public Space(final Vector aCenter, final double aSize, final Space<D> aParent, final GridQuadrant aQuadrant, final long aDeph, final boolean aFullCreate) {
 		this(aCenter, aSize, aParent, aQuadrant, aDeph);
 		if (aFullCreate && !this.finalSpace) {
 			this.quadrants[GridQuadrant.I.ordinal()] = Space.newInstance(this, GridQuadrant.I, this.finalSpace);
@@ -135,27 +142,37 @@ public class Space<D> {
 	/**
 	 * Adds the shape.
 	 *
-	 * @param aData  the a shape
+	 * @param aData the a shape
 	 * @param aPoint the a point
 	 * @return the space
 	 */
 	public Space<D> addData(final D aData, final Vector aPoint) {
-		if (NumberUtils.isOutOfRange(aPoint.x) || NumberUtils.isOutOfRange(aPoint.y))
-			return null;
+		if (MathContext.inRange(aPoint.x) && MathContext.inRange(aPoint.y))
+			return this.addInternalData(aData, aPoint);
 
+		return null;
+	}
+
+	/**
+	 * Adds the internal data.
+	 *
+	 * @param aData the a data
+	 * @param aPoint the a point
+	 * @return the space
+	 */
+	private Space<D> addInternalData(final D aData, final Vector aPoint) {
 		if (this.finalSpace) {
 			this.data.add(aData);
 			return this;
 		} else {
 			GridQuadrant gridQuadrat = GridQuadrant.getQuadrant(aPoint, this.center);
-
 			Space<D> quadrant = this.quadrants[gridQuadrat.ordinal()];
 			if (quadrant == null) {
 				quadrant = Space.newInstance(this, gridQuadrat);
 				this.quadrants[gridQuadrat.ordinal()] = quadrant;
 			}
 
-			return quadrant.addData(aData, aPoint);
+			return quadrant.addInternalData(aData, aPoint);
 		}
 	}
 
@@ -166,36 +183,36 @@ public class Space<D> {
 	 * @return the space
 	 */
 	public Space<D> getSpace(final Vector aPoint) {
-		if (NumberUtils.isOutOfRange(aPoint.x) || NumberUtils.isOutOfRange(aPoint.y))
-			return null;
-		return this.internalGetSpace(aPoint);
+		if (MathContext.inRange(aPoint.x) && MathContext.inRange(aPoint.y))
+			return this.getInternalSpace(aPoint);
+
+		return null;
 	}
 
 	/**
-	 * Internal get space.
+	 * Gets the internal space.
 	 *
 	 * @param aPoint the a point
-	 * @return the space
+	 * @return the internal space
 	 */
-	private Space<D> internalGetSpace(final Vector aPoint) {
+	private Space<D> getInternalSpace(final Vector aPoint) {
 		if (this.finalSpace)
 			return this;
 		else {
 			GridQuadrant gridQuadrat = GridQuadrant.getQuadrant(aPoint, this.center);
-
 			Space<D> quadrant = this.quadrants[gridQuadrat.ordinal()];
 			if (quadrant == null)
 				return null;
 
-			return quadrant.getSpace(aPoint);
+			return quadrant.getInternalSpace(aPoint);
 		}
 	}
 
 	/**
 	 * New instance.
 	 *
-	 * @param           <D> the generic type
-	 * @param aParent   the a parent
+	 * @param <D> the generic type
+	 * @param aParent the a parent
 	 * @param aQuadrant the a quadrant
 	 * @return the space
 	 */
@@ -206,42 +223,45 @@ public class Space<D> {
 	/**
 	 * New instance.
 	 *
-	 * @param             <D> the generic type
-	 * @param aParent     the a parent
-	 * @param aQuadrant   the a quadrant
+	 * @param <D> the generic type
+	 * @param aParent the a parent
+	 * @param aQuadrant the a quadrant
 	 * @param aFullCreate the a full create
 	 * @return the space
 	 */
 	public static final <D> Space<D> newInstance(final Space<D> aParent, final GridQuadrant aQuadrant, final boolean aFullCreate) {
-		Number size = aParent.size.div(Number.toNumber(2, 0), true);
-		Vector center = aParent.center.addVector(aQuadrant.vector.multiply(size));
-		return new Space<D>(center, size, aParent, aQuadrant, aParent.deph + 1, aFullCreate);
+		double size = aParent.size / 2;
+		Vector center = aParent.center.sum(aQuadrant.vector.getNormalized().multiply(size));
+		return new Space<>(center, size, aParent, aQuadrant, aParent.deph + 1, aFullCreate);
 	}
 
 	/**
 	 * New global space.
 	 *
 	 * @param <D> the generic type
+	 * @param aSize the a size
 	 * @return the space
 	 */
-	public static final <D> Space<D> newGlobalSpace() {
-		return Space.newGlobalSpace(false);
+	public static final <D> Space<D> newGlobalSpace(final double aSize) {
+		return Space.newGlobalSpace(aSize, false);
 	}
 
 	/**
 	 * New global space.
 	 *
-	 * @param             <D> the generic type
+	 * @param <D> the generic type
+	 * @param aSize the a size
 	 * @param aFullCreate the a full create
 	 * @return the space
 	 */
-	public static final <D> Space<D> newGlobalSpace(final boolean aFullCreate) {
-		return new Space<D>(Vector.ZERO, Number.toNumberUncecked(Number.POSITIV_INFINITY.nativ * 2), null, null, 0, aFullCreate);
+	public static final <D> Space<D> newGlobalSpace(final double aSize, final boolean aFullCreate) {
+		return new Space<>(Vector.ZERO, aSize, null, null, 0, aFullCreate);
 	}
 
 	/**
-	 * @return
+	 * To string.
 	 *
+	 * @return the string
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

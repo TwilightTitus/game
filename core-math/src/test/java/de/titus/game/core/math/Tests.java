@@ -5,6 +5,8 @@ package de.titus.game.core.math;
 
 import org.junit.jupiter.api.Test;
 
+import de.titus.game.core.math.fixpoint.MathContext;
+
 /**
  * @author xce3560
  *
