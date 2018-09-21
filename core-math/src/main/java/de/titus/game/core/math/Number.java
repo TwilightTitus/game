@@ -1,12 +1,12 @@
 package de.titus.game.core.math;
 
-import de.titus.game.core.math.specials.MaxValue;
-import de.titus.game.core.math.specials.MinValue;
-import de.titus.game.core.math.specials.NegativInfinity;
-import de.titus.game.core.math.specials.NegativOne;
-import de.titus.game.core.math.specials.One;
-import de.titus.game.core.math.specials.PositivInfinity;
-import de.titus.game.core.math.specials.Zero;
+import de.titus.game.core.math.specials.numbers.MaxValue;
+import de.titus.game.core.math.specials.numbers.MinValue;
+import de.titus.game.core.math.specials.numbers.NegativInfinity;
+import de.titus.game.core.math.specials.numbers.NegativOne;
+import de.titus.game.core.math.specials.numbers.One;
+import de.titus.game.core.math.specials.numbers.PositivInfinity;
+import de.titus.game.core.math.specials.numbers.Zero;
 
 /**
  * The Class Number.
@@ -14,48 +14,48 @@ import de.titus.game.core.math.specials.Zero;
 public class Number implements Cloneable {
 
 	/** The Constant MAX_VALUE. */
-	public static final Number	MAX_VALUE			= MaxValue.INSTANCE;
+	public static final Number MAX_VALUE = MaxValue.INSTANCE;
 
 	/** The Constant MIN_VALUE. */
-	public static final Number	MIN_VALUE			= MinValue.INSTANCE;
+	public static final Number MIN_VALUE = MinValue.INSTANCE;
 
 	/** The Constant POSITIV_INFINITY. */
-	public static final Number	POSITIV_INFINITY	= PositivInfinity.INSTANCE;
+	public static final Number POSITIV_INFINITY = PositivInfinity.INSTANCE;
 
 	/** The Constant NEGATIV_INFINITY. */
-	public static final Number	NEGATIV_INFINITY	= NegativInfinity.INSTANCE;
+	public static final Number NEGATIV_INFINITY = NegativInfinity.INSTANCE;
 
 	/** The Constant NaN. */
-	public static final Number	NaN					= de.titus.game.core.math.specials.NaN.INSTANCE;
+	public static final Number NaN = de.titus.game.core.math.specials.numbers.NaN.INSTANCE;
 
 	/** The Constant PI. */
-	public static final Number	PI					= new Number(MathContext.PI);
+	public static final Number PI = new Number(MathContext.PI);
 
 	/** The Constant E. */
-	public static final Number	E					= new Number(MathContext.E);
+	public static final Number E = new Number(MathContext.E);
 
 	/** The Constant ZERO. */
-	public static final Number	ZERO				= Zero.INSTANCE;
+	public static final Number ZERO = Zero.INSTANCE;
 
 	/** The Constant ONE. */
-	public static final Number	ONE					= One.INSTANCE;
+	public static final Number ONE = One.INSTANCE;
 
 	/** The Constant NEGATIV_ONE. */
-	public static final Number	NEGATIV_ONE			= NegativOne.INSTANCE;
+	public static final Number NEGATIV_ONE = NegativOne.INSTANCE;
 
 	/** The computable. */
-	public final boolean		computable;
+	public final boolean computable;
 
 	/** The nativ. */
-	public final long			nativ;
+	public final long nativ;
 
 	/** The sign. */
-	public final boolean		sign;
+	public final boolean sign;
 
 	/**
 	 * Instantiates a new number.
 	 *
-	 * @param aNativ the a nativ
+	 * @param aNativ       the a nativ
 	 * @param isComputable the is computable
 	 */
 	protected Number(final long aNativ, final boolean isComputable) {
@@ -77,7 +77,7 @@ public class Number implements Cloneable {
 	 * Instantiates a new number.
 	 *
 	 * @param aPredicimal the a predicimal
-	 * @param aDecimal the a decimal
+	 * @param aDecimal    the a decimal
 	 */
 	protected Number(final long aPredicimal, final long aDecimal) {
 		this((aPredicimal * MathContext.PRECISION + (aDecimal * MathContext.PRECISION / 10)));
@@ -86,9 +86,9 @@ public class Number implements Cloneable {
 	/**
 	 * Instantiates a new number.
 	 *
-	 * @param aSign the a sign
+	 * @param aSign       the a sign
 	 * @param aPredicimal the a predicimal
-	 * @param aDecimal the a decimal
+	 * @param aDecimal    the a decimal
 	 */
 	protected Number(final boolean aSign, final long aPredicimal, final long aDecimal) {
 		this((aSign ? -1 : 1) * (aPredicimal * MathContext.PRECISION + (aDecimal * MathContext.PRECISION / 10)));
@@ -126,10 +126,27 @@ public class Number implements Cloneable {
 	 * @return the number
 	 */
 	public Number multi(final Number aNumber) {
+		return this.multi(aNumber, false);
+	}
+
+	/**
+	 * Multi.
+	 *
+	 * @param aNumber   the a number
+	 * @param unchecked the unchecked
+	 * @return the number
+	 */
+	public Number multi(final Number aNumber, final boolean unchecked) {
 		if (!aNumber.computable)
 			return Number.NaN;
+		double zahl1 = (double) this.nativ / MathContext.PRECISION;
+		double zahl2 = (double) aNumber.nativ / MathContext.PRECISION;
+		long result = (long) (zahl1 * zahl2) * MathContext.PRECISION;
 
-		return Number.toNumber(this.nativ * aNumber.nativ);
+		if (unchecked)
+			return Number.toNumberUncecked(result);
+		else
+			return Number.toNumber(result);
 	}
 
 	/**
@@ -139,10 +156,28 @@ public class Number implements Cloneable {
 	 * @return the number
 	 */
 	public Number div(final Number aNumber) {
+		return this.div(aNumber, false);
+	}
+
+	/**
+	 * Div unchecked.
+	 *
+	 * @param aNumber   the a number
+	 * @param unchecked the unchecked
+	 * @return the number
+	 */
+	public Number div(final Number aNumber, final boolean unchecked) {
 		if (!aNumber.computable)
 			return Number.NaN;
 
-		return Number.toNumber(this.nativ / aNumber.nativ);
+		double zahl1 = (double) this.nativ / MathContext.PRECISION;
+		double zahl2 = (double) aNumber.nativ / MathContext.PRECISION;
+		long result = (long) (zahl1 / zahl2) * MathContext.PRECISION;
+
+		if (unchecked)
+			return Number.toNumberUncecked(result);
+		else
+			return Number.toNumber(result);
 	}
 
 	/**
@@ -226,6 +261,13 @@ public class Number implements Cloneable {
 
 	}
 
+	/**
+	 * Equals.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj)
@@ -233,6 +275,12 @@ public class Number implements Cloneable {
 		return super.equals(obj);
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return this.nativ / MathContext.PRECISION + "." + (this.nativ - (this.nativ / MathContext.PRECISION));
@@ -242,7 +290,7 @@ public class Number implements Cloneable {
 	 * To number.
 	 *
 	 * @param aPredicimal the a predicimal
-	 * @param aDecimal the a decimal
+	 * @param aDecimal    the a decimal
 	 * @return the number
 	 */
 	public static Number toNumber(final long aPredicimal, final long aDecimal) {
@@ -252,9 +300,9 @@ public class Number implements Cloneable {
 	/**
 	 * To number.
 	 *
-	 * @param aSign the a sign
+	 * @param aSign       the a sign
 	 * @param aPredicimal the a predicimal
-	 * @param aDecimal the a decimal
+	 * @param aDecimal    the a decimal
 	 * @return the number
 	 */
 	public static Number toNumber(final boolean aSign, final long aPredicimal, final long aDecimal) {
@@ -275,7 +323,7 @@ public class Number implements Cloneable {
 	 * To number.
 	 *
 	 * @param aPredicimal the a predicimal
-	 * @param aDecimal the a decimal
+	 * @param aDecimal    the a decimal
 	 * @return the number
 	 */
 	public static Number toNumberUncecked(final long aPredicimal, final long aDecimal) {
@@ -285,9 +333,9 @@ public class Number implements Cloneable {
 	/**
 	 * To number.
 	 *
-	 * @param aSign the a sign
+	 * @param aSign       the a sign
 	 * @param aPredicimal the a predicimal
-	 * @param aDecimal the a decimal
+	 * @param aDecimal    the a decimal
 	 * @return the number
 	 */
 	public static Number toNumberUncecked(final boolean aSign, final long aPredicimal, final long aDecimal) {

@@ -1,9 +1,10 @@
 /**
- * 
+ *
  */
 package de.titus.game.core.math;
 
-import de.titus.game.core.math.specials.NormalizedVector;
+import de.titus.game.core.math.specials.vectors.NormalizedVector;
+import de.titus.game.core.math.specials.vectors.ZeroVector;
 
 /**
  * The Class Vector.
@@ -12,24 +13,27 @@ import de.titus.game.core.math.specials.NormalizedVector;
  */
 public class Vector {
 
+	/** The Constant ZERO. */
+	public static final Vector ZERO = ZeroVector.INSTANCE;
+
 	/** The x. */
-	public final Number	x;
+	public final Number x;
 
 	/** The y. */
-	public final Number	y;
+	public final Number y;
 
 	/** The length. */
-	private Number		length;
+	private Number length;
 
 	/** The normalize. */
-	private Vector		normalized;
+	private Vector normalized;
 
 	/**
 	 * Instantiates a new vector.
 	 *
-	 * @param aX the a X
-	 * @param aY the a Y
-	 * @param aLength the a length
+	 * @param aX          the a X
+	 * @param aY          the a Y
+	 * @param aLength     the a length
 	 * @param aNormalized the a normalized
 	 */
 	protected Vector(final Number aX, final Number aY, final Number aLength, final Vector aNormalized) {
@@ -90,6 +94,26 @@ public class Vector {
 			this.normalized = new NormalizedVector(Number.toNumberUncecked(x), Number.toNumberUncecked(y));
 		}
 		return this.normalized;
+	}
+
+	/**
+	 * Adds the vector.
+	 *
+	 * @param aVector the a vector
+	 * @return the vector
+	 */
+	public Vector addVector(final Vector aVector) {
+		return new Vector(this.x.sum(aVector.x), this.y.sum(aVector.y));
+	}
+
+	/**
+	 * Multiply.
+	 *
+	 * @param aNumber the a number
+	 * @return the vector
+	 */
+	public Vector multiply(final Number aNumber) {
+		return new Vector(this.x.multi(aNumber), this.y.multi(aNumber));
 	}
 
 	/**

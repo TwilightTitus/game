@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.titus.game.core.math.specials;
+package de.titus.game.core.math.specials.numbers;
 
 import de.titus.game.core.math.Number;
 

@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.titus.game.core.math.specials;
+package de.titus.game.core.math.specials.numbers;
 
 import de.titus.game.core.math.MathContext;
 import de.titus.game.core.math.Number;
@@ -11,26 +11,33 @@ import de.titus.game.core.math.Number;
  *
  * @author xce3560
  */
-public final class MinValue extends Number {
+public final class MaxValue extends Number {
 
 	/** The Constant INSTANCE. */
-	public static final MinValue INSTANCE = new MinValue();
+	public static final MaxValue INSTANCE = new MaxValue();
 
 	/**
 	 * Instantiates a new max value.
 	 */
-	private MinValue() {
-		super(MathContext.MIN_VALUE);
+	private MaxValue() {
+		super(MathContext.MAX_VALUE);
 	}
 
+	/**
+	 * Sum.
+	 *
+	 * @param aNumber the a number
+	 * @return the number
+	 * @see de.titus.game.core.math.Number#sum(de.titus.game.core.math.Number)
+	 */
 	@Override
 	public Number sum(final Number aNumber) {
 		if (aNumber.sign)
-			return Number.NEGATIV_INFINITY;
-		else if (aNumber.equals(Number.MAX_VALUE))
+			return super.sum(aNumber);
+		else if (aNumber.equals(Number.MIN_VALUE))
 			return Number.ZERO;
 		else
-			return super.sum(aNumber);
+			return Number.POSITIV_INFINITY;
 	}
 
 	/**
@@ -43,11 +50,11 @@ public final class MinValue extends Number {
 	@Override
 	public Number sub(final Number aNumber) {
 		if (aNumber.sign)
-			return super.sub(aNumber);
+			return Number.POSITIV_INFINITY;
 		else if (aNumber.equals(Number.MAX_VALUE))
 			return Number.ZERO;
 		else
-			return Number.NEGATIV_INFINITY;
+			return super.sub(aNumber);
 	}
 
 	/**
@@ -62,17 +69,6 @@ public final class MinValue extends Number {
 	}
 
 	/**
-	 * Sqrt.
-	 *
-	 * @return the number
-	 * @see de.titus.game.core.math.Number#sqrt()
-	 */
-	@Override
-	public Number sqrt() {
-		return Number.NaN;
-	}
-
-	/**
 	 * Negate.
 	 *
 	 * @return the number
@@ -80,7 +76,7 @@ public final class MinValue extends Number {
 	 */
 	@Override
 	public Number negate() {
-		return Number.MAX_VALUE;
+		return Number.MIN_VALUE;
 	}
 
 }

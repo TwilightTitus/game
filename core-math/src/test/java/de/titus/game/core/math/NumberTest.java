@@ -6,7 +6,6 @@ package de.titus.game.core.math;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,8 +34,4 @@ class NumberTest {
 		}
 	}
 
-	void testZeroPointFive() {
-		Number test = new Number(0, 5);
-		Assertions.assertTrue(test.nativ == (5 * MathContext.PRECISION / 10));
-	}
 }

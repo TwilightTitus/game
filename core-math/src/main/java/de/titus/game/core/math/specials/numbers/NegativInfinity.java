@@ -1,25 +1,26 @@
 /**
  *
  */
-package de.titus.game.core.math.specials;
+package de.titus.game.core.math.specials.numbers;
 
+import de.titus.game.core.math.MathContext;
 import de.titus.game.core.math.Number;
 
 /**
- * The Class NaN.
+ * The Class PositivInfinity.
  *
  * @author xce3560
  */
-public final class NaN extends Number {
+public class NegativInfinity extends Number {
 
 	/** The Constant INSTANCE. */
-	public static final NaN INSTANCE = new NaN();
+	public static final NegativInfinity INSTANCE = new NegativInfinity();
 
 	/**
-	 * Instantiates a new na N.
+	 * Instantiates a new positiv infinity.
 	 */
-	private NaN() {
-		super(0, false);
+	protected NegativInfinity() {
+		super(MathContext.NEGATIV_INFINITY, false);
 	}
 
 	/**
@@ -78,7 +79,7 @@ public final class NaN extends Number {
 	 */
 	@Override
 	public Number pow() {
-		return this;
+		return Number.POSITIV_INFINITY;
 	}
 
 	/**
@@ -89,7 +90,7 @@ public final class NaN extends Number {
 	 */
 	@Override
 	public Number sqrt() {
-		return this;
+		return Number.NaN;
 	}
 
 	/**
@@ -100,7 +101,7 @@ public final class NaN extends Number {
 	 */
 	@Override
 	public Number negate() {
-		return Number.NaN;
+		return Number.POSITIV_INFINITY;
 	}
 
 	/**
