@@ -12,7 +12,10 @@ public enum GridQuadrant {
 	/** The iii. */
 	III(new Vector(-1, -1)),
 	/** The iv. */
-	IV(new Vector(1, -1));
+	IV(new Vector(1, -1)),
+
+	/** The root. */
+	ROOT(Vector.ZERO);
 
 	/** The vector. */
 	public final Vector vector;

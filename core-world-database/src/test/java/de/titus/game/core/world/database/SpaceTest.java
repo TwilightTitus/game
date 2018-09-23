@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import de.titus.game.core.math.doublepoint.GridQuadrant;
 import de.titus.game.core.math.doublepoint.MathContext;
 import de.titus.game.core.math.doublepoint.Vector;
 
@@ -18,7 +17,7 @@ class SpaceTest {
 	/** The Constant RANDOM. */
 	public static final Random			RANDOM		= new Random();
 	/** The Constant GLOBALSPACE. */
-	public static final Space<Object>	GLOBALSPACE	= Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2);
+	public static final Space<Object>	GLOBALSPACE	= new GlobalSpace<>(MathContext.POSITIV_INFINITY * 2, 10, 1000);
 
 	/**
 	 * Test create full space.
@@ -27,11 +26,12 @@ class SpaceTest {
 	void testCreateFullSpace() {
 		Runtime runtime = Runtime.getRuntime();
 		long currentMemory = runtime.totalMemory() - runtime.freeMemory();
-		Space<Object> aSpace = Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2, true);
+		Space<Object> global = new GlobalSpace<>(MathContext.POSITIV_INFINITY * 2, 10, 500);
+		global.createFullDepth();
 		long memoryUsage = runtime.totalMemory() - runtime.freeMemory() - currentMemory;
-		System.out.println("memory usage for full Space: " + ((double) memoryUsage / (8 * 1024 * 1024)));
-
-		Assertions.assertNotNull(aSpace);
+		System.out.println("memory usage for full space: " + ((memoryUsage / 1024 / 1024)) + "MB");
+		System.out.println("Space instances: " + Space.CLASSCOUNTER);
+		Assertions.assertNotNull(global);
 	}
 
 	/**
@@ -94,7 +94,8 @@ class SpaceTest {
 	 */
 	@RepeatedTest(10)
 	void testAddDataPerformace() {
-		Space<Object> global = Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2, true);
+		Space<Object> global = new GlobalSpace<>(MathContext.POSITIV_INFINITY * 2, 10, 1000);
+		// global.createFullDepth();
 		Object data;
 		Vector point;
 		long addRuntime = 0;
@@ -130,7 +131,9 @@ class SpaceTest {
 
 	@Test
 	void testAddDataPerformaceFullFill() {
-		Space<Object> global = Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2, true);
+		Space<Object> global = new GlobalSpace<>(MathContext.POSITIV_INFINITY * 2, 10, 1000);
+		// global.createFullDepth();
+
 		Object data;
 		Vector point;
 		long addRuntime = 0;
@@ -163,13 +166,4 @@ class SpaceTest {
 		System.out.println("get: " + getRuntime + "ms / " + getCount);
 		System.out.println("avg get: " + ((double) getRuntime / getCount) + "ms");
 	}
-
-	/**
-	 * Test new instance.
-	 */
-	@Test
-	void testNewInstance() {
-		Space.newInstance(Space.newGlobalSpace(MathContext.POSITIV_INFINITY * 2), GridQuadrant.I);
-	}
-
 }
