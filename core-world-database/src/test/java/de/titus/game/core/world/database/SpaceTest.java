@@ -26,7 +26,7 @@ class SpaceTest {
 	void testCreateFullSpace() {
 		Runtime runtime = Runtime.getRuntime();
 		long currentMemory = runtime.totalMemory() - runtime.freeMemory();
-		Space<Object> global = new GlobalSpace<>(MathContext.POSITIV_INFINITY * 2, 10, 500);
+		Space<Object> global = new GlobalSpace<>(1000 * 1000 * 2, 100, 1000);
 		global.createFullDepth();
 		long memoryUsage = runtime.totalMemory() - runtime.freeMemory() - currentMemory;
 		System.out.println("memory usage for full space: " + ((memoryUsage / 1024 / 1024)) + "MB");

@@ -114,9 +114,7 @@ public class Vector implements Cloneable {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("(").append(this.x).append(", ").append(this.y).append(")");
-		return sb.toString();
+		return "[" + this.x + ", " + this.y + "]";
 	}
 
 	/**
