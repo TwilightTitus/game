@@ -11,7 +11,7 @@ import de.titus.game.core.math.doublepoint.Vector;
 public class SpaceObject<D> {
 
 	/** The local center. */
-	public final Vector localCenter;
+	public final Vector direction;
 
 	/** The data. */
 	public final D data;
@@ -25,30 +25,15 @@ public class SpaceObject<D> {
 	/** The world collision box. */
 	private Polygon worldCollisionBox;
 
-	/**
-	 * Instantiates a new space object.
-	 *
-	 * @param aLocalCenter       the a local center
-	 * @param aLocalCollisionBox the a local collision box
-	 * @param aData              the a data
-	 */
-	public SpaceObject(final Vector aLocalCenter, final Polygon aLocalCollisionBox, final D aData) {
+	public SpaceObject(final Vector aDirection, final Polygon aLocalCollisionBox, final D aData) {
 		super();
-		this.localCenter = aLocalCenter;
+		this.direction = aDirection;
 		this.data = aData;
 		this.localCollisionBox = aLocalCollisionBox;
 	}
 
-	/**
-	 * Instantiates a new space object.
-	 *
-	 * @param aLocalCenter       the a local center
-	 * @param aLocalCollisionBox the a local collision box
-	 * @param aData              the a data
-	 * @param aWorldCenter       the a world center
-	 */
-	public SpaceObject(final Vector aLocalCenter, final Polygon aLocalCollisionBox, final D aData, final Vector aWorldCenter) {
-		this(aLocalCenter, aLocalCollisionBox, aData);
+	public SpaceObject(final Vector aDirection, final Polygon aLocalCollisionBox, final D aData, final Vector aWorldCenter) {
+		this(aDirection, aLocalCollisionBox, aData);
 		this.worldCenter = aWorldCenter;
 	}
 
