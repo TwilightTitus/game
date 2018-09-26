@@ -24,13 +24,13 @@ public class SpaceObject<D> {
 	public final D				data;
 
 	/** The local collision box. */
-	public final Polygon		localCollisionBox;
+	public final Polygon		shape;
 
 	/** The world center. */
 	private Vector				worldCenter;
 
 	/** The world collision box. */
-	private Polygon				worldCollisionBox;
+	private Polygon				worldShape;
 
 	/** The chunk. */
 	public final List<Chunk<D>>	chunks;
@@ -47,7 +47,7 @@ public class SpaceObject<D> {
 		this.id = UUID.randomUUID().toString();
 		this.direction = aDirection;
 		this.data = aData;
-		this.localCollisionBox = aLocalCollisionBox;
+		this.shape = aLocalCollisionBox;
 		this.chunks = new ArrayList<>();
 	}
 
@@ -71,7 +71,7 @@ public class SpaceObject<D> {
 	 */
 	public void setWorldCenter(final Vector aWorldCenter) {
 		this.worldCenter = aWorldCenter;
-		this.worldCollisionBox = null;
+		this.worldShape = null;
 	}
 
 	/**
@@ -88,10 +88,10 @@ public class SpaceObject<D> {
 	 *
 	 * @return the world collion box
 	 */
-	public Polygon getWorldCollionBox() {
-		if (this.worldCollisionBox == null)
-			this.worldCollisionBox = this.localCollisionBox.move(this.worldCenter);
+	public Polygon getWorldShape() {
+		if (this.worldShape == null)
+			this.worldShape = this.shape.move(this.worldCenter);
 
-		return this.worldCollisionBox;
+		return this.worldShape;
 	}
 }

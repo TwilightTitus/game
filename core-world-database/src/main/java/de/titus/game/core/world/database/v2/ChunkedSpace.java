@@ -95,7 +95,7 @@ public class ChunkedSpace<D> {
 	public void addSpaceObject(final SpaceObject<D> aObject, final Vector aPoint) {
 		this.objects.put(aObject.id, aObject);
 		aObject.setWorldCenter(aPoint);
-		Polygon shape = aObject.getWorldCollionBox();
+		Polygon shape = aObject.getWorldShape();
 		for (int i = 0; i < shape.vertices.length; i++)
 			aObject.chunks.add(this.getChunkFor(shape.vertices[i]));
 	}
