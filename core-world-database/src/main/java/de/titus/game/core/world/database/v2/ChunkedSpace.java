@@ -81,9 +81,15 @@ public class ChunkedSpace<D> {
 	 * @return the chunk for
 	 */
 	public Chunk<D> getChunkFor(final Vector aPoint) {
-		int x = (int) Math.round(Math.abs(aPoint.x) % this.chunkSize);
-		int y = (int) Math.round(Math.abs(aPoint.y) % this.chunkSize);
-		return this.grid[x][y];
+		try {
+			int x = (int) Math.round(Math.abs(aPoint.x) / this.chunkSize);
+			int y = (int) Math.round(Math.abs(aPoint.y) / this.chunkSize);
+			return this.grid[x][y];
+		} catch (Exception e) {
+			System.out.println(this);
+			System.out.println(aPoint);
+			throw e;
+		}
 	}
 
 	/**

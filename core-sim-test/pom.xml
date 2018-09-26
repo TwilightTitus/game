@@ -19,6 +19,19 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>de.titus.game</groupId>
+			<artifactId>core-math</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.titus.game</groupId>
+			<artifactId>core-world-database</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	
+	
+		<dependency>
 			<groupId>org.dyn4j</groupId>
 			<artifactId>dyn4j</artifactId>
 		</dependency>

@@ -168,7 +168,7 @@ public class Vector implements Cloneable {
 	 *
 	 * @return the direction
 	 */
-	public double getDirection() {
+	public double getAngle() {
 		if (this.calcDirection) {
 			this.direction = Math.atan2(this.y, this.x);
 			this.calcDirection = false;
