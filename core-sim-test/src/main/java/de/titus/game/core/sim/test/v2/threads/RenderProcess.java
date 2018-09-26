@@ -9,11 +9,11 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.titus.game.core.sim.test.v2.EntityManager;
 import de.titus.game.core.sim.test.v2.GameObject;
+import de.titus.game.core.world.database.v2.Chunk;
 import de.titus.game.core.world.database.v2.SpaceObject;
 
 /**
@@ -93,9 +93,10 @@ public class RenderProcess extends AbstractProcess {
 		g.fillRect(-400, -300, 800, 600);
 
 		// lets move the view up some
-		g.translate(0.0, -1.0 * this.scale);
-
-		List<SpaceObject<Object>> objects = new ArrayList<>(EntityManager.WORLD.objects.values());
+		// g.translate(0.0, -1.0 * this.scale);
+		g.scale(50, 50);
+		Chunk<Object> chunk = EntityManager.WORLD.grid[EntityManager.WORLD.centerIndex.x][EntityManager.WORLD.centerIndex.y];
+		List<SpaceObject<Object>> objects = chunk.getData();
 		// draw all the objects in the world
 		if (objects != null)
 			for (SpaceObject<Object> object : objects) {

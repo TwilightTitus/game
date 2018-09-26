@@ -52,6 +52,7 @@ public abstract class AbstractProcess implements Runnable {
 	 */
 	@Override
 	public void run() {
+		long counter = 0;
 		long lastRun = 0;
 		while (!this.stop) {
 			try {
@@ -64,7 +65,9 @@ public abstract class AbstractProcess implements Runnable {
 				long runtime = System.currentTimeMillis() - currentTime;
 
 				long sleep = (this.updateRate - runtime);
-				System.out.println(this.getClass().getSimpleName() + " runtime: " + runtime + "ms -> sleep: " + sleep + "ms");
+				if (counter % 10 == 0)
+					System.out.println(this.getClass().getSimpleName() + " runtime: " + runtime + "ms -> sleep: " + sleep + "ms");
+				counter++;
 				if (sleep > 0)
 					Thread.sleep(sleep);
 				else

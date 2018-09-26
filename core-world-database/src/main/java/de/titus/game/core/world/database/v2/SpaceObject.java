@@ -1,7 +1,7 @@
 package de.titus.game.core.world.database.v2;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import de.titus.game.core.math.doublepoint.Polygon;
@@ -33,7 +33,7 @@ public class SpaceObject<D> {
 	private Polygon				worldShape;
 
 	/** The chunk. */
-	public final List<Chunk<D>>	chunks;
+	public final Set<Chunk<D>>	chunks;
 
 	/**
 	 * Instantiates a new space object.
@@ -48,7 +48,7 @@ public class SpaceObject<D> {
 		this.direction = aDirection;
 		this.data = aData;
 		this.shape = aLocalCollisionBox;
-		this.chunks = new ArrayList<>();
+		this.chunks = new HashSet<>();
 	}
 
 	/**
@@ -93,5 +93,10 @@ public class SpaceObject<D> {
 			this.worldShape = this.shape.move(this.worldCenter);
 
 		return this.worldShape;
+	}
+
+	@Override
+	public String toString() {
+		return "SpaceObject [id=" + this.id + ", direction=" + this.direction + ", data=" + this.data + ", shape=" + this.shape + ", worldCenter=" + this.worldCenter + ", worldShape=" + this.worldShape + ", chunks=" + this.chunks + "]";
 	}
 }

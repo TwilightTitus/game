@@ -17,6 +17,7 @@ public class GameObject extends SpaceObject<Object> {
 
 	public GameObject(final Vector aDirection, final Polygon aLocalCollisionBox, final Object aData) {
 		super(aDirection, aLocalCollisionBox, aData);
+		this.color = new Color((float) Math.random() * 0.5f + 0.5f, (float) Math.random() * 0.5f + 0.5f, (float) Math.random() * 0.5f + 0.5f);
 	}
 
 	/**
@@ -46,9 +47,17 @@ public class GameObject extends SpaceObject<Object> {
 			p.closePath();
 			this.graphicShape = p;
 		}
-
+		g.setColor(this.color);
+		g.fill(this.graphicShape);
+		// draw the outline
+		g.setColor(GameObject.getOutlineColor(this.color));
 		g.draw(this.graphicShape);
 
 		g.setTransform(ot);
+	}
+
+	private static Color getOutlineColor(final Color color) {
+		Color oc = color.darker();
+		return new Color(oc.getRed(), oc.getGreen(), oc.getBlue(), color.getAlpha());
 	}
 }

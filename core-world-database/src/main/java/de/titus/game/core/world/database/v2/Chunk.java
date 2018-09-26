@@ -1,9 +1,12 @@
 package de.titus.game.core.world.database.v2;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import de.titus.game.core.math.doublepoint.Vector;
+import de.titus.game.core.math.doublepoint.utils.RandomUtils;
 
 /**
  * The Class Chunk.
@@ -55,19 +58,19 @@ public class Chunk<D> {
 	}
 
 	/** The chunked space. */
-	public final ChunkedSpace<D>		chunkedSpace;
+	public final ChunkedSpace<D>				chunkedSpace;
 
 	/** The size. */
-	public final double					size;
+	public final double							size;
 
 	/** The center. */
-	public final Vector					center;
+	public final Vector							center;
 
 	/** The index. */
-	public final ChunkIndex				index;
+	public final ChunkIndex						index;
 
 	/** The data. */
-	private final Set<SpaceObject<D>>	data;
+	private final Map<String, SpaceObject<D>>	data;
 
 	/**
 	 * Instantiates a new chunk.
@@ -82,7 +85,7 @@ public class Chunk<D> {
 		this.center = aCenter;
 		this.size = aSize;
 		this.chunkedSpace = aChunkedSpace;
-		this.data = new HashSet<>();
+		this.data = new ConcurrentHashMap<>();
 	}
 
 	/**
@@ -91,7 +94,17 @@ public class Chunk<D> {
 	 * @param aObject the a object
 	 */
 	public void addData(final SpaceObject<D> aObject) {
-		this.data.add(aObject);
+		this.data.put(aObject.id, aObject);
+		aObject.chunks.add(this);
+	}
+
+	/**
+	 * Gets the data.
+	 *
+	 * @return the data
+	 */
+	public List<SpaceObject<D>> getData() {
+		return new ArrayList<>(this.data.values());
 	}
 
 	/**
@@ -105,4 +118,12 @@ public class Chunk<D> {
 		return "Chunk [center=" + this.center + ", index=" + this.index + "]";
 	}
 
+	/**
+	 * Gets the random point.
+	 *
+	 * @return the random point
+	 */
+	public Vector getRandomPoint() {
+		return RandomUtils.getRandomPoint(this.size / 2).sum(this.center);
+	}
 }

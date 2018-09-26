@@ -6,6 +6,7 @@ import de.titus.game.core.math.doublepoint.Polygon;
 import de.titus.game.core.math.doublepoint.Vector;
 import de.titus.game.core.sim.test.v2.EntityManager;
 import de.titus.game.core.sim.test.v2.GameObject;
+import de.titus.game.core.world.database.v2.Chunk;
 
 public class CommandProcess extends AbstractProcess {
 
@@ -22,12 +23,12 @@ public class CommandProcess extends AbstractProcess {
 	protected void runProcess(final long aCurrentTime, final long aLastRun, final long aDeltaTime) {
 		try {
 			if (EntityManager.WORLD.objects.size() < CommandProcess.itemCount) {
-
+				Chunk<Object> center = EntityManager.WORLD.grid[EntityManager.WORLD.centerIndex.x][EntityManager.WORLD.centerIndex.y];
 				for (int i = 0; i < 1000; i++) {
 					Vector d = new Vector(this.random.nextBoolean() ? -1 : 1 * this.random.nextDouble() * 10, this.random.nextBoolean() ? -1 : 1 * this.random.nextDouble() * 10);
 
 					GameObject object = new GameObject(d, CommandProcess.TESTPOLYGON, null);
-					EntityManager.WORLD.addSpaceObject(object, this.getRandomPos());
+					EntityManager.WORLD.addSpaceObject(object, center.getRandomPoint());
 				}
 			}
 		} catch (Exception e) {

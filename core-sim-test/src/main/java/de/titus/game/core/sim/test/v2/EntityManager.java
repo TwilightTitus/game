@@ -8,7 +8,7 @@ import de.titus.game.core.world.database.v2.ChunkedSpace;
 public final class EntityManager {
 
 	/** The Constant WORLD. */
-	public static final ChunkedSpace<Object> WORLD = new ChunkedSpace<>(1000, 100);
+	public static final ChunkedSpace<Object> WORLD = new ChunkedSpace<>(10, 1000);
 	static {
 		EntityManager.WORLD.init();
 	}

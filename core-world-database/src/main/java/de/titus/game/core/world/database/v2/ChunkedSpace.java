@@ -68,9 +68,8 @@ public class ChunkedSpace<D> {
 	 * @return the chunk index for
 	 */
 	public ChunkIndex getChunkIndexFor(final Vector aPoint) {
-		int x = (int) Math.round(Math.abs(aPoint.x) % this.chunkSize);
-		int y = (int) Math.round(Math.abs(aPoint.y) % this.chunkSize);
-
+		int x = (int) Math.round(this.centerIndex.x - aPoint.x / this.chunkSize);
+		int y = (int) Math.round(this.centerIndex.y - aPoint.y / this.chunkSize);
 		return new ChunkIndex(x, y);
 	}
 
@@ -82,8 +81,8 @@ public class ChunkedSpace<D> {
 	 */
 	public Chunk<D> getChunkFor(final Vector aPoint) {
 		try {
-			int x = (int) Math.round(Math.abs(aPoint.x) / this.chunkSize);
-			int y = (int) Math.round(Math.abs(aPoint.y) / this.chunkSize);
+			int x = (int) Math.round(this.centerIndex.x - aPoint.x / this.chunkSize);
+			int y = (int) Math.round(this.centerIndex.y - aPoint.y / this.chunkSize);
 			return this.grid[x][y];
 		} catch (Exception e) {
 			System.out.println(this);
@@ -99,11 +98,11 @@ public class ChunkedSpace<D> {
 	 * @param aPoint the a point
 	 */
 	public void addSpaceObject(final SpaceObject<D> aObject, final Vector aPoint) {
-		this.objects.put(aObject.id, aObject);
 		aObject.setWorldCenter(aPoint);
 		Polygon shape = aObject.getWorldShape();
 		for (int i = 0; i < shape.vertices.length; i++)
-			aObject.chunks.add(this.getChunkFor(shape.vertices[i]));
+			this.getChunkFor(shape.vertices[i]).addData(aObject);
+		this.objects.put(aObject.id, aObject);
 	}
 
 	/**
