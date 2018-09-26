@@ -7,6 +7,8 @@ import de.titus.game.core.math.doublepoint.Vector;
 
 /**
  * The Class Chunk.
+ *
+ * @param <D> the generic type
  */
 public class Chunk<D> {
 
@@ -53,18 +55,19 @@ public class Chunk<D> {
 	}
 
 	/** The chunked space. */
-	public final ChunkedSpace<D>	chunkedSpace;
+	public final ChunkedSpace<D>		chunkedSpace;
 
 	/** The size. */
-	public final double				size;
+	public final double					size;
 
 	/** The center. */
-	public final Vector				center;
+	public final Vector					center;
 
 	/** The index. */
-	public final ChunkIndex			index;
+	public final ChunkIndex				index;
 
-	public final Set<D>				data;
+	/** The data. */
+	private final Set<SpaceObject<D>>	data;
 
 	/**
 	 * Instantiates a new chunk.
@@ -82,6 +85,21 @@ public class Chunk<D> {
 		this.data = new HashSet<>();
 	}
 
+	/**
+	 * Adds the data.
+	 *
+	 * @param aObject the a object
+	 */
+	public void addData(final SpaceObject<D> aObject) {
+		this.data.add(aObject);
+	}
+
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Chunk [center=" + this.center + ", index=" + this.index + "]";

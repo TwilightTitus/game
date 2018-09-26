@@ -2,6 +2,7 @@ package de.titus.game.core.world.database;
 
 import de.titus.game.core.math.doublepoint.MathContext;
 import de.titus.game.core.math.doublepoint.Vector;
+import de.titus.game.core.world.database.v2.SpaceObject;
 
 /**
  * The Class Space.
@@ -49,6 +50,10 @@ public class GlobalSpace<D> extends Space<D> {
 			return super.getSpace(aPoint);
 
 		return null;
+	}
+
+	public void addSpaceObject(final SpaceObject<D> aObject) {
+
 	}
 
 }

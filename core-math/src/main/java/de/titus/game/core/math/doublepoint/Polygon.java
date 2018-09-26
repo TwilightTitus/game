@@ -8,10 +8,10 @@ import de.titus.game.core.math.doublepoint.utils.EdgeUtils;
 public class Polygon {
 
 	/** The vertices. */
-	public final Vector[] vertices;
+	public final Vector[]	vertices;
 
 	/** The edges. */
-	public final Edge[] edges;
+	private Edge[]			edges;
 
 	/**
 	 * Instantiates a new collision box.
@@ -21,6 +21,27 @@ public class Polygon {
 	public Polygon(final Vector... theVertices) {
 		this.vertices = theVertices;
 		this.edges = EdgeUtils.buildPolygonEdges(theVertices);
+	}
+
+	/**
+	 * Gets the edges.
+	 *
+	 * @return the edges
+	 */
+	public Edge[] getEdges() {
+		if (this.edges == null)
+			this.edges = EdgeUtils.buildPolygonEdges(this.vertices);
+		return this.edges;
+	}
+
+	/**
+	 * Transform.
+	 *
+	 * @param aTransformation the a transformation
+	 * @return the polygon
+	 */
+	public Polygon transform(final Transformation aTransformation) {
+		return new Polygon(aTransformation.doExecute(this.vertices));
 	}
 
 	/**

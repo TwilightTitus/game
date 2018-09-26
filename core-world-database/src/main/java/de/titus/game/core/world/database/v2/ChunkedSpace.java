@@ -1,5 +1,9 @@
 package de.titus.game.core.world.database.v2;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import de.titus.game.core.math.doublepoint.Polygon;
 import de.titus.game.core.math.doublepoint.Vector;
 
 /**
@@ -10,19 +14,22 @@ import de.titus.game.core.math.doublepoint.Vector;
 public class ChunkedSpace<D> {
 
 	/** The size. */
-	public final double			size;
+	public final double							size;
 
 	/** The chunk size. */
-	public final double			chunkSize;
+	public final double							chunkSize;
 
 	/** The grid. */
-	public final Chunk<D>[][]	grid;
+	public final Chunk<D>[][]					grid;
 
 	/** The center. */
-	public final Vector			center	= Vector.ZERO;
+	public final Vector							center	= Vector.ZERO;
 
 	/** The center index. */
-	public final ChunkIndex		centerIndex;
+	public final ChunkIndex						centerIndex;
+
+	/** The objects. */
+	public final Map<String, SpaceObject<D>>	objects;
 
 	/**
 	 * Instantiates a new chunked space.
@@ -36,6 +43,7 @@ public class ChunkedSpace<D> {
 		this.chunkSize = aChunkSize;
 		this.grid = new Chunk[aChunkCount + 1][aChunkCount + 1];
 		this.centerIndex = new ChunkIndex(this.grid.length / 2, this.grid.length / 2);
+		this.objects = new ConcurrentHashMap<>();
 	}
 
 	/**
@@ -64,6 +72,32 @@ public class ChunkedSpace<D> {
 		int y = (int) Math.round(Math.abs(aPoint.y) % this.chunkSize);
 
 		return new ChunkIndex(x, y);
+	}
+
+	/**
+	 * Gets the chunk for.
+	 *
+	 * @param aPoint the a point
+	 * @return the chunk for
+	 */
+	public Chunk<D> getChunkFor(final Vector aPoint) {
+		int x = (int) Math.round(Math.abs(aPoint.x) % this.chunkSize);
+		int y = (int) Math.round(Math.abs(aPoint.y) % this.chunkSize);
+		return this.grid[x][y];
+	}
+
+	/**
+	 * Adds the space object.
+	 *
+	 * @param aObject the a object
+	 * @param aPoint the a point
+	 */
+	public void addSpaceObject(final SpaceObject<D> aObject, final Vector aPoint) {
+		this.objects.put(aObject.id, aObject);
+		aObject.setWorldCenter(aPoint);
+		Polygon shape = aObject.getWorldCollionBox();
+		for (int i = 0; i < shape.vertices.length; i++)
+			aObject.chunks.add(this.getChunkFor(shape.vertices[i]));
 	}
 
 	/**
