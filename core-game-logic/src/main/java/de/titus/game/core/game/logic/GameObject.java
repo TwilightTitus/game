@@ -8,12 +8,12 @@ import java.awt.geom.Path2D;
 
 import de.titus.game.core.math.doublepoint.Polygon;
 import de.titus.game.core.math.doublepoint.Vector;
-import de.titus.game.core.world.database.v2.SpaceObject;
+import de.titus.game.core.world.database.v2.Entity;
 
 /**
  * The Class GameObject.
  */
-public class GameObject extends SpaceObject<Object> {
+public class GameObject extends Entity<Object> {
 
 	/** The color of the object. */
 	private Color	color;
