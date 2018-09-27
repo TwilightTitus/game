@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.titus.game.core.sim.test.v2.threads;
+package de.titus.game.core.game.logic.processes;
 
 /**
  * The Class Process.

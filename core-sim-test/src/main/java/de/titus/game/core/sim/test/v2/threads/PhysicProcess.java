@@ -3,6 +3,8 @@
  */
 package de.titus.game.core.sim.test.v2.threads;
 
+import de.titus.game.core.game.logic.processes.AbstractProcess;
+
 /**
  * The Class PhysicSim.
  *

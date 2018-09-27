@@ -14,6 +14,7 @@ import java.util.List;
 
 import de.titus.game.core.game.logic.Game;
 import de.titus.game.core.game.logic.GameObject;
+import de.titus.game.core.game.logic.processes.AbstractProcess;
 import de.titus.game.core.world.database.v2.Chunk;
 import de.titus.game.core.world.database.v2.ChunkIndex;
 import de.titus.game.core.world.database.v2.SpaceObject;

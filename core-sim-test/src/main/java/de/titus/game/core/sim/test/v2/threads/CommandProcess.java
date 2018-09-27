@@ -4,6 +4,7 @@ import java.util.Random;
 
 import de.titus.game.core.game.logic.Game;
 import de.titus.game.core.game.logic.GameObject;
+import de.titus.game.core.game.logic.processes.AbstractProcess;
 import de.titus.game.core.math.doublepoint.Polygon;
 import de.titus.game.core.math.doublepoint.Vector;
 import de.titus.game.core.math.doublepoint.utils.RandomUtils;
