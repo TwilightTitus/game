@@ -1,4 +1,4 @@
-package de.titus.game.core.sim.test.v2;
+package de.titus.game.core.logic;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

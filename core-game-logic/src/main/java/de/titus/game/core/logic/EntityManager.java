@@ -1,4 +1,4 @@
-package de.titus.game.core.sim.test.v2;
+package de.titus.game.core.logic;
 
 import de.titus.game.core.world.database.v2.ChunkedSpace;
 

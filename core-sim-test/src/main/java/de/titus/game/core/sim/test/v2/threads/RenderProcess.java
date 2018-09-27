@@ -12,8 +12,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
-import de.titus.game.core.sim.test.v2.EntityManager;
-import de.titus.game.core.sim.test.v2.GameObject;
+import de.titus.game.core.logic.EntityManager;
+import de.titus.game.core.logic.GameObject;
 import de.titus.game.core.world.database.v2.Chunk;
 import de.titus.game.core.world.database.v2.ChunkIndex;
 import de.titus.game.core.world.database.v2.SpaceObject;

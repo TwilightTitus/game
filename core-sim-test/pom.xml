@@ -29,6 +29,12 @@
 			<artifactId>core-world-database</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>de.titus.game</groupId>
+			<artifactId>core-game-logic</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	
 	
 		<dependency>

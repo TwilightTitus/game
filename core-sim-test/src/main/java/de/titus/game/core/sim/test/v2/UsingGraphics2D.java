@@ -42,6 +42,7 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import de.titus.game.core.logic.EntityManager;
 import de.titus.game.core.sim.test.v2.threads.CommandProcess;
 import de.titus.game.core.sim.test.v2.threads.PhysicProcess;
 import de.titus.game.core.sim.test.v2.threads.RenderProcess;

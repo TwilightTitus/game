@@ -2,11 +2,11 @@ package de.titus.game.core.sim.test.v2.threads;
 
 import java.util.Random;
 
+import de.titus.game.core.logic.EntityManager;
+import de.titus.game.core.logic.GameObject;
 import de.titus.game.core.math.doublepoint.Polygon;
 import de.titus.game.core.math.doublepoint.Vector;
 import de.titus.game.core.math.doublepoint.utils.RandomUtils;
-import de.titus.game.core.sim.test.v2.EntityManager;
-import de.titus.game.core.sim.test.v2.GameObject;
 
 public class CommandProcess extends AbstractProcess {
 
