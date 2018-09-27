@@ -29,7 +29,7 @@ public class ChunkedSpace<D> {
 	public final ChunkIndex						centerIndex;
 
 	/** The objects. */
-	public final Map<String, SpaceObject<D>>	objects;
+	public final Map<String, Entity<D>>	objects;
 
 	/**
 	 * Instantiates a new chunked space.
@@ -97,7 +97,7 @@ public class ChunkedSpace<D> {
 	 * @param aObject the a object
 	 * @param aPoint the a point
 	 */
-	public void addSpaceObject(final SpaceObject<D> aObject, final Vector aPoint) {
+	public void addSpaceObject(final Entity<D> aObject, final Vector aPoint) {
 		aObject.setWorldCenter(aPoint);
 		Polygon shape = aObject.getWorldShape();
 		for (int i = 0; i < shape.vertices.length; i++)

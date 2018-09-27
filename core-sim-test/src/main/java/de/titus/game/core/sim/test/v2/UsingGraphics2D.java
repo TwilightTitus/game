@@ -43,8 +43,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import de.titus.game.core.game.logic.Game;
+import de.titus.game.core.game.logic.processes.SimulateUpdateProcess;
 import de.titus.game.core.sim.test.v2.threads.CommandProcess;
-import de.titus.game.core.sim.test.v2.threads.PhysicProcess;
 import de.titus.game.core.sim.test.v2.threads.RenderProcess;
 import de.titus.game.core.world.database.v2.ChunkIndex;
 
@@ -73,7 +73,7 @@ public class UsingGraphics2D extends JFrame {
 
 	private RenderProcess		renderer;
 
-	private PhysicProcess		physicSim;
+	private SimulateUpdateProcess		physicSim;
 
 	private CommandProcess		commandProcess;
 
@@ -180,7 +180,7 @@ public class UsingGraphics2D extends JFrame {
 			this.renderer = new RenderProcess(this.canvas, UsingGraphics2D.SCALE);
 
 		if (this.physicSim == null)
-			this.physicSim = new PhysicProcess();
+			this.physicSim = new SimulateUpdateProcess();
 
 		if (this.commandProcess == null)
 			this.commandProcess = new CommandProcess();

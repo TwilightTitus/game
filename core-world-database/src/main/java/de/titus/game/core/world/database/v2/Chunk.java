@@ -70,7 +70,7 @@ public class Chunk<D> {
 	public final ChunkIndex						index;
 
 	/** The data. */
-	private final Map<String, SpaceObject<D>>	data;
+	private final Map<String, Entity<D>>	data;
 
 	/**
 	 * Instantiates a new chunk.
@@ -93,7 +93,7 @@ public class Chunk<D> {
 	 *
 	 * @param aObject the a object
 	 */
-	public void addData(final SpaceObject<D> aObject) {
+	public void addData(final Entity<D> aObject) {
 		this.data.put(aObject.id, aObject);
 		aObject.chunks.add(this);
 	}
@@ -103,7 +103,7 @@ public class Chunk<D> {
 	 *
 	 * @return the data
 	 */
-	public List<SpaceObject<D>> getData() {
+	public List<Entity<D>> getData() {
 		return new ArrayList<>(this.data.values());
 	}
 

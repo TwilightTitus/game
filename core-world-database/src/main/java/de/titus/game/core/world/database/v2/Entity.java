@@ -12,7 +12,7 @@ import de.titus.game.core.math.doublepoint.Vector;
  *
  * @param <D> the generic type
  */
-public class SpaceObject<D> {
+public class Entity<D> {
 
 	/** The id. */
 	public final String			id;
@@ -42,7 +42,7 @@ public class SpaceObject<D> {
 	 * @param aLocalCollisionBox the a local collision box
 	 * @param aData the a data
 	 */
-	public SpaceObject(final Vector aDirection, final Polygon aLocalCollisionBox, final D aData) {
+	public Entity(final Vector aDirection, final Polygon aLocalCollisionBox, final D aData) {
 		super();
 		this.id = UUID.randomUUID().toString();
 		this.direction = aDirection;
@@ -59,7 +59,7 @@ public class SpaceObject<D> {
 	 * @param aData the a data
 	 * @param aWorldCenter the a world center
 	 */
-	public SpaceObject(final Vector aDirection, final Polygon aLocalCollisionBox, final D aData, final Vector aWorldCenter) {
+	public Entity(final Vector aDirection, final Polygon aLocalCollisionBox, final D aData, final Vector aWorldCenter) {
 		this(aDirection, aLocalCollisionBox, aData);
 		this.worldCenter = aWorldCenter;
 	}

@@ -17,7 +17,7 @@ import de.titus.game.core.game.logic.GameObject;
 import de.titus.game.core.game.logic.processes.AbstractProcess;
 import de.titus.game.core.world.database.v2.Chunk;
 import de.titus.game.core.world.database.v2.ChunkIndex;
-import de.titus.game.core.world.database.v2.SpaceObject;
+import de.titus.game.core.world.database.v2.Entity;
 
 /**
  * The Class Renderer.
@@ -128,10 +128,10 @@ public class RenderProcess extends AbstractProcess {
 		// g.translate(0.0, -1.0 * this.scale);
 		g.scale(1000 / 800, 1000 / 600);
 		Chunk<Object> chunk = Game.WORLD.grid[this.index.x][this.index.y];
-		List<SpaceObject<Object>> objects = chunk.getData();
+		List<Entity<Object>> objects = chunk.getData();
 		// draw all the objects in the world
 		if (objects != null)
-			for (SpaceObject<Object> object : objects) {
+			for (Entity<Object> object : objects) {
 				if (object instanceof GameObject) {
 					try {
 						((GameObject) object).render(g);

@@ -1,21 +1,21 @@
 /**
  *
  */
-package de.titus.game.core.sim.test.v2.threads;
+package de.titus.game.core.game.logic.processes;
 
-import de.titus.game.core.game.logic.processes.AbstractProcess;
+import de.titus.game.core.game.logic.Game;
 
 /**
  * The Class PhysicSim.
  *
  * @author xce3560
  */
-public class PhysicProcess extends AbstractProcess {
+public class SimulateUpdateProcess extends AbstractProcess {
 
 	/**
 	 * Instantiates a new physic sim.
 	 */
-	public PhysicProcess() {
+	public SimulateUpdateProcess() {
 		super(1000 / 60);
 	}
 
@@ -28,11 +28,14 @@ public class PhysicProcess extends AbstractProcess {
 	 */
 	@Override
 	protected void runProcess(final long aCurrentTime, final long aLastRun, final long aDeltaTime) {
+		System.out.println("start SimulateUpdateProcess");
 		double elapsedTime = (double) aDeltaTime / 1000;
 		try {
+
+			Game.nextTick();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("stop physic");
+			System.out.println("stop SimulateUpdateProcess");
 			this.stop();
 		}
 	}
