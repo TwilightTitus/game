@@ -5,6 +5,7 @@ package de.titus.game.core.sim.test.v2.threads;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
@@ -14,6 +15,7 @@ import java.util.List;
 import de.titus.game.core.sim.test.v2.EntityManager;
 import de.titus.game.core.sim.test.v2.GameObject;
 import de.titus.game.core.world.database.v2.Chunk;
+import de.titus.game.core.world.database.v2.ChunkIndex;
 import de.titus.game.core.world.database.v2.SpaceObject;
 
 /**
@@ -29,6 +31,9 @@ public class RenderProcess extends AbstractProcess {
 	/** The scale. */
 	private final double	scale;
 
+	/** The index. */
+	private ChunkIndex		index	= EntityManager.WORLD.centerIndex;
+
 	/**
 	 * Instantiates a new renderer.
 	 *
@@ -42,10 +47,31 @@ public class RenderProcess extends AbstractProcess {
 	}
 
 	/**
+	 * Change chunk.
+	 *
+	 * @param aIndex the a index
+	 */
+	public void changeChunk(final ChunkIndex aIndex) {
+		if (aIndex == null)
+			this.index = EntityManager.WORLD.centerIndex;
+		this.index = aIndex;
+	}
+
+	/**
+	 * Gets the chunk index.
+	 *
+	 * @return the chunk index
+	 */
+	public ChunkIndex getChunkIndex() {
+		return this.index;
+	}
+
+	/**
 	 * Run process.
 	 *
 	 * @param aCurrentTime the a current time
 	 * @param aLastRun the a last run
+	 * @param aDeltaTime the a delta time
 	 * @see de.titus.game.core.sim.test.threads.AbstractProcess#runProcess(long,
 	 *      long)
 	 */
@@ -66,6 +92,11 @@ public class RenderProcess extends AbstractProcess {
 
 		// render anything about the Example (will render the World objects)
 		this.renderEntities(g);
+
+		g.transform(yFlip);
+		g.setColor(Color.BLACK);
+		g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+		g.drawString("chunk: " + this.index.toString() + " - MEM: " + ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024) + "MB - object count: " + EntityManager.WORLD.objects.size(), -400, 300);
 
 		// dispose of the graphics object
 		g.dispose();
@@ -94,8 +125,8 @@ public class RenderProcess extends AbstractProcess {
 
 		// lets move the view up some
 		// g.translate(0.0, -1.0 * this.scale);
-		g.scale(50, 50);
-		Chunk<Object> chunk = EntityManager.WORLD.grid[EntityManager.WORLD.centerIndex.x][EntityManager.WORLD.centerIndex.y];
+		g.scale(1000 / 800, 1000 / 600);
+		Chunk<Object> chunk = EntityManager.WORLD.grid[this.index.x][this.index.y];
 		List<SpaceObject<Object>> objects = chunk.getData();
 		// draw all the objects in the world
 		if (objects != null)

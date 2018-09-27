@@ -26,17 +26,26 @@ package de.titus.game.core.sim.test.v2;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import de.titus.game.core.sim.test.v2.threads.CommandProcess;
 import de.titus.game.core.sim.test.v2.threads.PhysicProcess;
 import de.titus.game.core.sim.test.v2.threads.RenderProcess;
+import de.titus.game.core.world.database.v2.ChunkIndex;
 
 /**
  * Class used to show a simple example of using the dyn4j project using Java2D
@@ -67,11 +76,16 @@ public class UsingGraphics2D extends JFrame {
 
 	private CommandProcess		commandProcess;
 
+	private JSpinner			x;
+
+	private JSpinner			y;
+
 	/**
 	 * Default constructor for the window
 	 */
 	public UsingGraphics2D() {
 		super("Graphics2D Example");
+
 		// setup the JFrame
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +104,36 @@ public class UsingGraphics2D extends JFrame {
 			}
 		});
 
+		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		ChunkIndex centerIndex = EntityManager.WORLD.centerIndex;
+		int grindSize = EntityManager.WORLD.grid.length - 1;
+
+		JPanel panel = new JPanel(new FlowLayout());
+		panel.add(new JLabel("x: "));
+		this.x = new JSpinner(new SpinnerNumberModel(0, centerIndex.x - grindSize, grindSize - centerIndex.x, 1));
+		this.x.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(final ChangeEvent e) {
+				UsingGraphics2D.this.changeChunkIndex();
+			}
+		});
+
+		panel.add(this.x);
+		panel.add(new JLabel("y: "));
+		this.y = new JSpinner(new SpinnerNumberModel(0, centerIndex.y - grindSize, grindSize - centerIndex.y, 1));
+		this.y.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(final ChangeEvent e) {
+				UsingGraphics2D.this.changeChunkIndex();
+			}
+		});
+		panel.add(this.y);
+
+		this.getContentPane().add(panel);
+
+		JPanel rendering = new JPanel(new FlowLayout());
 		// create the size of the window
 		Dimension size = new Dimension(800, 600);
 
@@ -99,8 +143,9 @@ public class UsingGraphics2D extends JFrame {
 		this.canvas.setMinimumSize(size);
 		this.canvas.setMaximumSize(size);
 
+		rendering.add(this.canvas);
+		this.getContentPane().add(rendering);
 		// add the canvas to the JFrame
-		this.add(this.canvas);
 
 		// make the JFrame not resizable
 		// (this way I dont have to worry about resize events)
@@ -114,6 +159,13 @@ public class UsingGraphics2D extends JFrame {
 
 		// make sure we are not stopped
 		this.stopped = false;
+	}
+
+	private void changeChunkIndex() {
+		ChunkIndex centerIndex = EntityManager.WORLD.centerIndex;
+		int xValue = (int) this.x.getValue() + centerIndex.x;
+		int yValue = (int) this.y.getValue() + centerIndex.y;
+		this.renderer.changeChunk(new ChunkIndex(xValue, yValue));
 	}
 
 	/**

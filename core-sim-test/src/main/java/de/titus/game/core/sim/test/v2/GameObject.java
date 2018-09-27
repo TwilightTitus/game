@@ -12,11 +12,13 @@ import de.titus.game.core.world.database.v2.SpaceObject;
 
 public class GameObject extends SpaceObject<Object> {
 	/** The color of the object */
-	protected Color	color;
+	private Color	color;
 	private Shape	graphicShape;
+	private double	scale;
 
-	public GameObject(final Vector aDirection, final Polygon aLocalCollisionBox, final Object aData) {
+	public GameObject(final Vector aDirection, final Polygon aLocalCollisionBox, final Object aData, final double aScale) {
 		super(aDirection, aLocalCollisionBox, aData);
+		this.scale = aScale;
 		this.color = new Color((float) Math.random() * 0.5f + 0.5f, (float) Math.random() * 0.5f + 0.5f, (float) Math.random() * 0.5f + 0.5f);
 	}
 
@@ -35,6 +37,7 @@ public class GameObject extends SpaceObject<Object> {
 		AffineTransform lt = new AffineTransform();
 		lt.translate(worldCenter.x, worldCenter.y);
 		lt.rotate(this.direction.getAngle());
+		lt.scale(this.scale, this.scale);
 
 		// apply the transform
 		g.transform(lt);
@@ -50,7 +53,7 @@ public class GameObject extends SpaceObject<Object> {
 		g.setColor(this.color);
 		g.fill(this.graphicShape);
 		// draw the outline
-		g.setColor(GameObject.getOutlineColor(this.color));
+		// g.setColor(GameObject.getOutlineColor(this.color));
 		g.draw(this.graphicShape);
 
 		g.setTransform(ot);
