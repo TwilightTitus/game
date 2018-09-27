@@ -42,7 +42,7 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import de.titus.game.core.logic.EntityManager;
+import de.titus.game.core.game.logic.Game;
 import de.titus.game.core.sim.test.v2.threads.CommandProcess;
 import de.titus.game.core.sim.test.v2.threads.PhysicProcess;
 import de.titus.game.core.sim.test.v2.threads.RenderProcess;
@@ -106,8 +106,8 @@ public class UsingGraphics2D extends JFrame {
 		});
 
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		ChunkIndex centerIndex = EntityManager.WORLD.centerIndex;
-		int grindSize = EntityManager.WORLD.grid.length - 1;
+		ChunkIndex centerIndex = Game.WORLD.centerIndex;
+		int grindSize = Game.WORLD.grid.length - 1;
 
 		JPanel panel = new JPanel(new FlowLayout());
 		panel.add(new JLabel("x: "));
@@ -163,7 +163,7 @@ public class UsingGraphics2D extends JFrame {
 	}
 
 	private void changeChunkIndex() {
-		ChunkIndex centerIndex = EntityManager.WORLD.centerIndex;
+		ChunkIndex centerIndex = Game.WORLD.centerIndex;
 		int xValue = (int) this.x.getValue() + centerIndex.x;
 		int yValue = (int) this.y.getValue() + centerIndex.y;
 		this.renderer.changeChunk(new ChunkIndex(xValue, yValue));

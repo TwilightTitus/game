@@ -1,4 +1,4 @@
-package de.titus.game.core.logic;
+package de.titus.game.core.game.logic;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -10,12 +10,28 @@ import de.titus.game.core.math.doublepoint.Polygon;
 import de.titus.game.core.math.doublepoint.Vector;
 import de.titus.game.core.world.database.v2.SpaceObject;
 
+/**
+ * The Class GameObject.
+ */
 public class GameObject extends SpaceObject<Object> {
-	/** The color of the object */
+
+	/** The color of the object. */
 	private Color	color;
+
+	/** The graphic shape. */
 	private Shape	graphicShape;
+
+	/** The scale. */
 	private double	scale;
 
+	/**
+	 * Instantiates a new game object.
+	 *
+	 * @param aDirection the a direction
+	 * @param aLocalCollisionBox the a local collision box
+	 * @param aData the a data
+	 * @param aScale the a scale
+	 */
 	public GameObject(final Vector aDirection, final Polygon aLocalCollisionBox, final Object aData, final double aScale) {
 		super(aDirection, aLocalCollisionBox, aData);
 		this.scale = aScale;
@@ -57,10 +73,5 @@ public class GameObject extends SpaceObject<Object> {
 		g.draw(this.graphicShape);
 
 		g.setTransform(ot);
-	}
-
-	private static Color getOutlineColor(final Color color) {
-		Color oc = color.darker();
-		return new Color(oc.getRed(), oc.getGreen(), oc.getBlue(), color.getAlpha());
 	}
 }

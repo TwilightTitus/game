@@ -12,8 +12,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
-import de.titus.game.core.logic.EntityManager;
-import de.titus.game.core.logic.GameObject;
+import de.titus.game.core.game.logic.Game;
+import de.titus.game.core.game.logic.GameObject;
 import de.titus.game.core.world.database.v2.Chunk;
 import de.titus.game.core.world.database.v2.ChunkIndex;
 import de.titus.game.core.world.database.v2.SpaceObject;
@@ -32,7 +32,7 @@ public class RenderProcess extends AbstractProcess {
 	private final double	scale;
 
 	/** The index. */
-	private ChunkIndex		index	= EntityManager.WORLD.centerIndex;
+	private ChunkIndex		index	= Game.WORLD.centerIndex;
 
 	/**
 	 * Instantiates a new renderer.
@@ -53,7 +53,7 @@ public class RenderProcess extends AbstractProcess {
 	 */
 	public void changeChunk(final ChunkIndex aIndex) {
 		if (aIndex == null)
-			this.index = EntityManager.WORLD.centerIndex;
+			this.index = Game.WORLD.centerIndex;
 		this.index = aIndex;
 	}
 
@@ -96,7 +96,7 @@ public class RenderProcess extends AbstractProcess {
 		g.transform(yFlip);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-		g.drawString("chunk: " + this.index.toString() + " - MEM: " + ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024) + "MB - object count: " + EntityManager.WORLD.objects.size(), -400, 300);
+		g.drawString("chunk: " + this.index.toString() + " - MEM: " + ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024) + "MB - object count: " + Game.WORLD.objects.size(), -400, 300);
 
 		// dispose of the graphics object
 		g.dispose();
@@ -126,7 +126,7 @@ public class RenderProcess extends AbstractProcess {
 		// lets move the view up some
 		// g.translate(0.0, -1.0 * this.scale);
 		g.scale(1000 / 800, 1000 / 600);
-		Chunk<Object> chunk = EntityManager.WORLD.grid[this.index.x][this.index.y];
+		Chunk<Object> chunk = Game.WORLD.grid[this.index.x][this.index.y];
 		List<SpaceObject<Object>> objects = chunk.getData();
 		// draw all the objects in the world
 		if (objects != null)
