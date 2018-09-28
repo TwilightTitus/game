@@ -11,7 +11,7 @@ import de.titus.game.core.game.logic.actions.Action;
 public final class ActionService {
 
 	/** The actions. */
-	private static List<Action> ACTIONS = new ArrayList<>();
+	private static volatile List<Action> ACTIONS = new ArrayList<>();
 
 	/**
 	 * Instantiates a new action service.
@@ -25,7 +25,9 @@ public final class ActionService {
 	 * @param aAction the a action
 	 */
 	public static void addAction(final Action aAction) {
-		ActionService.ACTIONS.add(aAction);
+		synchronized (ActionService.ACTIONS) {
+			ActionService.ACTIONS.add(aAction);
+		}
 	}
 
 	/**
@@ -34,8 +36,12 @@ public final class ActionService {
 	 * @return the list
 	 */
 	public static List<Action> popActions() {
+
 		List<Action> actions = ActionService.ACTIONS;
-		ActionService.ACTIONS = new ArrayList<>();
+		synchronized (ActionService.ACTIONS) {
+			ActionService.ACTIONS = new ArrayList<>();
+		}
+
 		return actions;
 	}
 

@@ -3,7 +3,11 @@
  */
 package de.titus.game.core.game.logic.processes;
 
+import java.util.List;
+
+import de.titus.game.core.game.logic.ActionService;
 import de.titus.game.core.game.logic.Game;
+import de.titus.game.core.game.logic.actions.Action;
 
 /**
  * The Class PhysicSim.
@@ -31,9 +35,23 @@ public class SimulateUpdateProcess extends AbstractProcess {
 		System.out.println("start SimulateUpdateProcess");
 		double elapsedTime = (double) aDeltaTime / 1000;
 		try {
+			long tick = Game.nextTick();
+			List<Action> actions = ActionService.popActions();
+			if (actions != null) {
+				System.out.println("actions: " + actions.size());
+				for (Action action : actions) {
+					try {
+						action.doAction(tick, aCurrentTime, aLastRun, aDeltaTime, elapsedTime);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					ActionService.addAction(action);
+				}
+			}
 
-			Game.nextTick();
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 			System.out.println("stop SimulateUpdateProcess");
 			this.stop();

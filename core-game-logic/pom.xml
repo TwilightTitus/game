@@ -29,6 +29,12 @@
 			<artifactId>core-world-database</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.google.auto.service</groupId>
+			<artifactId>auto-service</artifactId>
+			<optional>true</optional>
+		</dependency>
 	
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
