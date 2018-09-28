@@ -14,7 +14,7 @@ import de.titus.game.core.math.doublepoint.utils.RandomUtils;
 public class TestContentProcess extends AbstractProcess {
 
 	private final Random		random		= new Random();
-	private static final int	itemCount	= 10000000;
+	private static final int	itemCount	= 100000;
 
 	public static Polygon		TESTPOLYGON	= new Polygon(new Vector(1, 1), new Vector(-1, 1), new Vector(-1, -1), new Vector(1, -1));
 
@@ -33,7 +33,7 @@ public class TestContentProcess extends AbstractProcess {
 					Vector pos = this.getRandomPos();
 
 					Game.WORLD.addSpaceObject(object, pos);
-					ActionService.addAction(new LinearMoving(object, d.multiply(this.random.nextDouble() * 10), 10));
+					ActionService.addAction(new LinearMoving(object, d.multiply(this.random.nextDouble() * 100), 10));
 				}
 			}
 		} catch (Exception e) {
