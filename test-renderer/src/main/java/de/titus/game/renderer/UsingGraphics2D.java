@@ -61,20 +61,21 @@ public class UsingGraphics2D extends JFrame {
 	/** The canvas to draw to */
 	private Canvas				canvas;
 
-	/** Wether the example is stopped or not */
-	private boolean				stopped;
-
-	private RenderProcess		renderer;
-
 	private JSpinner			x;
 
 	private JSpinner			y;
 
+	private final RenderProcess	renderer;
+
 	/**
 	 * Default constructor for the window
+	 * 
+	 * @param aRenderer
 	 */
-	public UsingGraphics2D() {
+	public UsingGraphics2D(final RenderProcess aRenderer) {
 		super("Graphics2D Example");
+		this.renderer = aRenderer;
+
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -129,9 +130,7 @@ public class UsingGraphics2D extends JFrame {
 
 		this.canvas.setIgnoreRepaint(true);
 		this.canvas.createBufferStrategy(2);
-
-		// make sure we are not stopped
-		this.stopped = false;
+		this.setVisible(true);
 	}
 
 	private void changeChunkIndex() {

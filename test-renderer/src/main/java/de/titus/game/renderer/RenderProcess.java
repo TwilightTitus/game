@@ -3,7 +3,6 @@
  */
 package de.titus.game.renderer;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -11,8 +10,6 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.util.List;
-
-import com.google.auto.service.AutoService;
 
 import de.titus.game.core.game.logic.Game;
 import de.titus.game.core.game.logic.GameObject;
@@ -26,7 +23,6 @@ import de.titus.game.core.world.database.v2.Entity;
  *
  * @author xce3560
  */
-@AutoService(AbstractProcess.class)
 public class RenderProcess extends AbstractProcess {
 
 	private UsingGraphics2D	window;
@@ -40,9 +36,9 @@ public class RenderProcess extends AbstractProcess {
 	 * @param aCanvas the a canvas
 	 * @param aScale the a scale
 	 */
-	public RenderProcess(final Canvas aCanvas) {
+	public RenderProcess() {
 		super(1000 / 60);
-		this.window = new UsingGraphics2D();
+		this.window = new UsingGraphics2D(this);
 	}
 
 	/**

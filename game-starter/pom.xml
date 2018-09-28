@@ -11,7 +11,6 @@
 		<relativePath>../parent</relativePath>
 	</parent>
 	<artifactId>game-starter</artifactId>
-
 	<name>game-starter</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -23,16 +22,29 @@
 			<artifactId>core-math</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>de.titus.game</groupId>
+			<artifactId>core-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>de.titus.game</groupId>
 			<artifactId>core-world-database</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-	
+		<dependency>
+			<groupId>de.titus.game</groupId>
+			<artifactId>core-game-logic</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.titus.game</groupId>
+			<artifactId>test-renderer</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 		</dependency>
 	</dependencies>
-</project>
+</project> 
