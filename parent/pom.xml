@@ -88,5 +88,6 @@
 		<module>../test-renderer</module>
 		<module>../core-game-logic</module>
 		<module>../game-starter</module>
+		<module>../content-loader-modul</module>
 	</modules>
 </project>
