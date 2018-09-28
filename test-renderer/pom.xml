@@ -10,7 +10,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parent</relativePath>
 	</parent>
-	<artifactId>core-sim-test</artifactId>
+	<artifactId>test-renderer</artifactId>
 
 	<name>core-model</name>
 	<url>http://maven.apache.org</url>
@@ -20,7 +20,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.titus.game</groupId>
-			<artifactId>test-renderer</artifactId>
+			<artifactId>core-math</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		

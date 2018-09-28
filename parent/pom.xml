@@ -69,5 +69,6 @@
 		<module>../core-model</module>
 		<module>../core-sim-test</module>
 		<module>../core-world-database</module>
+		<module>../test-renderer</module>
 	</modules>
 </project>
