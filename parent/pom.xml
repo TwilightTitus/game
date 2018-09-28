@@ -17,6 +17,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 
 		<junit.jupiter.version>5.3.1</junit.jupiter.version>
+		<google.auto-service>1.0-rc4</google.auto-service>
 	</properties>
 
 
@@ -26,6 +27,14 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.auto.service</groupId>
+						<artifactId>auto-service</artifactId>
+						<version>${google.auto-service}</version>
+						<optional>true</optional>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -41,6 +50,13 @@
 				<groupId>org.dyn4j</groupId>
 				<artifactId>dyn4j</artifactId>
 				<version>3.3.0-fork</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.auto.service</groupId>
+				<artifactId>auto-service</artifactId>
+				<version>${google.auto-service}</version>
+				<optional>true</optional>
 			</dependency>
 
 			<dependency>
@@ -70,5 +86,6 @@
 		<module>../core-sim-test</module>
 		<module>../core-world-database</module>
 		<module>../test-renderer</module>
+		<module>../core-game-logic</module>
 	</modules>
 </project>

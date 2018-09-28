@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.titus.game.core.sim.test.v2.threads;
+package de.titus.game.renderer;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -11,6 +11,8 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.util.List;
+
+import com.google.auto.service.AutoService;
 
 import de.titus.game.core.game.logic.Game;
 import de.titus.game.core.game.logic.GameObject;
@@ -24,13 +26,10 @@ import de.titus.game.core.world.database.v2.Entity;
  *
  * @author xce3560
  */
+@AutoService(AbstractProcess.class)
 public class RenderProcess extends AbstractProcess {
 
-	/** The canvas. */
-	private final Canvas	canvas;
-
-	/** The scale. */
-	private final double	scale;
+	private UsingGraphics2D	window;
 
 	/** The index. */
 	private ChunkIndex		index	= Game.WORLD.centerIndex;
@@ -41,10 +40,9 @@ public class RenderProcess extends AbstractProcess {
 	 * @param aCanvas the a canvas
 	 * @param aScale the a scale
 	 */
-	public RenderProcess(final Canvas aCanvas, final double aScale) {
+	public RenderProcess(final Canvas aCanvas) {
 		super(1000 / 60);
-		this.canvas = aCanvas;
-		this.scale = aScale;
+		this.window = new UsingGraphics2D();
 	}
 
 	/**
@@ -79,7 +77,7 @@ public class RenderProcess extends AbstractProcess {
 	@Override
 	protected void runProcess(final long aCurrentTime, final long aLastRun, final long aDeltaTime) {
 		// get the graphics object to render to
-		Graphics2D g = (Graphics2D) this.canvas.getBufferStrategy().getDrawGraphics();
+		Graphics2D g = (Graphics2D) this.window.getCanvas().getBufferStrategy().getDrawGraphics();
 
 		// before we render everything im going to flip the y axis and move the
 		// origin to the center (instead of it being in the top left corner)
@@ -103,7 +101,7 @@ public class RenderProcess extends AbstractProcess {
 		g.dispose();
 
 		// blit/flip the buffer
-		BufferStrategy strategy = this.canvas.getBufferStrategy();
+		BufferStrategy strategy = this.window.getCanvas().getBufferStrategy();
 		if (!strategy.contentsLost()) {
 			strategy.show();
 		}

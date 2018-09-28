@@ -10,9 +10,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parent</relativePath>
 	</parent>
-	<artifactId>core-world-database</artifactId>
+	<artifactId>game-starter</artifactId>
 
-	<name>core-world-database</name>
+	<name>game-starter</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,6 +23,13 @@
 			<artifactId>core-math</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>de.titus.game</groupId>
+			<artifactId>core-world-database</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>

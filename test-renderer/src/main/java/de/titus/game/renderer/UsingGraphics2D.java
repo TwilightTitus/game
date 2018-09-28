@@ -22,13 +22,11 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package de.titus.game.core.sim.test.v2;
+package de.titus.game.renderer;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -36,16 +34,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import de.titus.game.core.game.logic.Game;
-import de.titus.game.core.game.logic.processes.SimulateUpdateProcess;
-import de.titus.game.core.sim.test.v2.threads.CommandProcess;
-import de.titus.game.core.sim.test.v2.threads.RenderProcess;
 import de.titus.game.core.world.database.v2.ChunkIndex;
 
 /**
@@ -73,10 +66,6 @@ public class UsingGraphics2D extends JFrame {
 
 	private RenderProcess		renderer;
 
-	private SimulateUpdateProcess		physicSim;
-
-	private CommandProcess		commandProcess;
-
 	private JSpinner			x;
 
 	private JSpinner			y;
@@ -86,24 +75,7 @@ public class UsingGraphics2D extends JFrame {
 	 */
 	public UsingGraphics2D() {
 		super("Graphics2D Example");
-
-		// setup the JFrame
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		// add a window listener
-		this.addWindowListener(new WindowAdapter() {
-			/*
-			 * (non-Javadoc)
-			 *
-			 * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-			 */
-			@Override
-			public void windowClosing(final WindowEvent e) {
-				// before we stop the JVM stop the example
-				UsingGraphics2D.this.stop();
-				super.windowClosing(e);
-			}
-		});
 
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		ChunkIndex centerIndex = Game.WORLD.centerIndex;
@@ -169,77 +141,7 @@ public class UsingGraphics2D extends JFrame {
 		this.renderer.changeChunk(new ChunkIndex(xValue, yValue));
 	}
 
-	/**
-	 * Start active rendering the example.
-	 * <p>
-	 * This should be called after the JFrame has been shown.
-	 */
-	public void start() {
-
-		if (this.renderer == null)
-			this.renderer = new RenderProcess(this.canvas, UsingGraphics2D.SCALE);
-
-		if (this.physicSim == null)
-			this.physicSim = new SimulateUpdateProcess();
-
-		if (this.commandProcess == null)
-			this.commandProcess = new CommandProcess();
-
-		this.commandProcess.start();
-		this.renderer.start();
-		// this.physicSim.start();
-	}
-
-	/**
-	 * The method calling the necessary methods to update the game, graphics, and
-	 * poll for input.
-	 */
-
-	/**
-	 * Stops the example.
-	 */
-	public synchronized void stop() {
-		this.stopped = true;
-		this.commandProcess.stop();
-		this.renderer.stop();
-		this.physicSim.stop();
-	}
-
-	/**
-	 * Returns true if the example is stopped.
-	 *
-	 * @return boolean true if stopped
-	 */
-	public synchronized boolean isStopped() {
-		return this.stopped;
-	}
-
-	/**
-	 * Entry point for the example application.
-	 *
-	 * @param args command line arguments
-	 */
-	public static void main(final String[] args) {
-		// set the look and feel to the system look and feel
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-
-		// create the example JFrame
-		UsingGraphics2D window = new UsingGraphics2D();
-
-		// show it
-		window.setVisible(true);
-
-		// start it
-		window.start();
+	public Canvas getCanvas() {
+		return this.canvas;
 	}
 }

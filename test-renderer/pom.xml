@@ -12,7 +12,7 @@
 	</parent>
 	<artifactId>test-renderer</artifactId>
 
-	<name>core-model</name>
+	<name>test-renderer</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,23 +23,22 @@
 			<artifactId>core-math</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.titus.game</groupId>
 			<artifactId>core-world-database</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.titus.game</groupId>
 			<artifactId>core-game-logic</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-	
-	
 		<dependency>
-			<groupId>org.dyn4j</groupId>
-			<artifactId>dyn4j</artifactId>
+			<groupId>com.google.auto.service</groupId>
+			<artifactId>auto-service</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>
