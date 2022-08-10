@@ -37,7 +37,7 @@ public class GameObject extends Body {
 		// transform the coordinate system from world coordinates to local coordinates
 		AffineTransform lt = new AffineTransform();
 		lt.translate(this.transform.getTranslationX() * UsingGraphics2D.SCALE, this.transform.getTranslationY() * UsingGraphics2D.SCALE);
-		lt.rotate(this.transform.getRotation());
+		lt.rotate(this.transform.getRotation().toDegrees());
 
 		// apply the transform
 		g.transform(lt);

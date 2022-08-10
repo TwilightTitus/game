@@ -14,7 +14,7 @@ import de.titus.game.core.math.doublepoint.utils.RandomUtils;
 public class TestContentProcess extends AbstractProcess {
 
 	private final Random		random		= new Random();
-	private static final int	itemCount	= 100000;
+	private static final int	itemCount	= 0;
 
 	public static Polygon		TESTPOLYGON	= new Polygon(new Vector(1, 1), new Vector(-1, 1), new Vector(-1, -1), new Vector(1, -1));
 
@@ -26,7 +26,7 @@ public class TestContentProcess extends AbstractProcess {
 	protected void runProcess(final long aCurrentTime, final long aLastRun, final long aDeltaTime) {
 		try {
 			if (Game.WORLD.objects.size() < TestContentProcess.itemCount) {
-				for (int i = 0; i < 10000; i++) {
+				for (int i = 0; i < 100000; i++) {
 					Vector d = new Vector(this.random.nextBoolean() ? -1 : 1 * this.random.nextDouble(), this.random.nextBoolean() ? -1 : 1 * this.random.nextDouble());
 
 					GameObject object = new GameObject(d, TestContentProcess.TESTPOLYGON, null, this.random.nextDouble() * 10 + 10);

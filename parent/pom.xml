@@ -46,10 +46,16 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
+			<!--dependency>
 				<groupId>org.dyn4j</groupId>
 				<artifactId>dyn4j</artifactId>
 				<version>3.3.0-fork</version>
+			</dependency-->
+			
+			<dependency>
+				<groupId>org.dyn4j</groupId>
+				<artifactId>dyn4j</artifactId>
+				<version>3.4.0</version>
 			</dependency>
 
 			<dependency>
